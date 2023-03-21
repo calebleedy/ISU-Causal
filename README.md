@@ -6,9 +6,9 @@ Welcome to the ISU Causal Inference Working Group! We meet Wednesdays from
 contains resources for what we have and intend to study. The current schedule
 is:
 
-|     Date |   Presentor |                                                        Topic |
-|    ----- |  ---------- |                                                       ------ |
-| March 22 | Caleb Leedy | [Welcome](Presentations/welcome_032223.pdf) and Introduction |
+| Date     | Presentor   | Topic                                                        | Code |
+| -----    | ----------  | ------                                                       | ---- |
+| March 22 | Caleb Leedy | [Welcome](Presentations/welcome_032223.pdf) and Introduction |      |
 
 # Folders
 
