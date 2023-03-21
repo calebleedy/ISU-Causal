@@ -1,0 +1,211 @@
+\documentclass{beamer} %
+\usetheme{CambridgeUS}
+\usepackage[latin1]{inputenc}
+\usefonttheme{professionalfonts}
+\usepackage{times}
+\usepackage{graphics}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{booktabs}
+
+\usepackage[style=authoryear]{biblatex}
+
+\addbibresource{~/Documents/grad_school/Research/references.bib}
+
+% theorem
+\BeforeBeginEnvironment{theorem}{
+  \setbeamercolor{block title}{fg=red!80!black,bg=gray!10!white}
+  \setbeamercolor{block body}{fg=black,bg=white}
+}
+\AfterEndEnvironment{theorem}{
+    \setbeamercolor{block title}{fg=blocktitlefgsave,bg=blocktitlebgsave}
+    \setbeamercolor{block body}{fg=blockbodyfgsave,bg=blockbodybgsave}
+}
+
+
+% definition
+\BeforeBeginEnvironment{definition}{
+  \setbeamercolor{block title}{fg=red!80!black,bg=gray!10!white}
+  \setbeamercolor{block body}{fg=black, bg=white}
+}
+\AfterEndEnvironment{definition}{
+    \setbeamercolor{block title}{fg=blocktitlefgsave,bg=blocktitlebgsave}
+    \setbeamercolor{block body}{fg=blockbodyfgsave,bg=blockbodybgsave}
+}
+
+\renewcommand{\arraystretch}{1.5}
+
+%\setbeamersize{text margin left=0.3mm,text margin right=0.1mm}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\expit}{expit}
+\DeclareMathOperator*{\Cov}{Cov}
+\DeclareMathOperator*{\Var}{Var}
+\newcommand{\R}{\mathbb{R}}
+
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, filecolor=magenta, urlcolor=blue}
+
+%\author[Azriel et al. (2022)]{Hyemin Yeon and Caleb Leedy}
+\title[CIWG]{Causal Inference Working Group}
+
+\begin{document}
+
+\everymath{\displaystyle}
+\setbeamertemplate{title page}[default][colsep=-4bp,rounded=true]
+\setbeamertemplate{itemize items}[circle]
+\setbeamercolor{block title}{bg=red!50,fg=black}
+\frame{\titlepage}
+
+\begin{frame}
+
+\begin{center}
+{\Large Welcome to the Causal Inference Working Group!}
+\end{center}
+
+\begin{itemize}
+    \item<2> We hope that this will be a great opportunity to learn and 
+    develop research in the field of causal inference.
+\end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Goals}
+
+    \begin{itemize}
+        \item<2-> Understand the Causal Inference literature,
+        \item<3-> Identify new areas of research, 
+        \item<4-> Introduce new researchers to the Causal Inference field, and 
+        \item<5-> Create a repository to facilitate future work.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Understanding the Literature}
+
+    \begin{itemize}
+        \item Most of what we are planning to do initially is to have people present
+        existing work.
+        \item We hope that people will present papers, packages, and research ideas.
+        \item We want to understand what has been done \textit{and} especially what is missing.
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Identifying New Areas of Research}
+
+    \begin{itemize}
+        \item When we know what needs to be done, we can fill this research gap. 
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Introducing New Researchers to the Field}
+
+    \begin{itemize}
+        \item Many people here may be new to causal inference and we want to welcome
+        you and get you started doing good research.
+        \item Encourage good teaching practices when presenting.
+    \end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Creating a Repository}
+
+    \begin{itemize}
+        \item We have a \href{https://github.com/calebleedy/ISU-Causal}{GitHub repo}. 
+        \item The purpose of this is to make it easier for people to understand
+        what already has been done, compare new ideas with existing methods, and
+        provide a space for people to work together.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{General structure}
+
+Format 1: One main presentation
+    \begin{itemize}
+        \item 10 min: warm-up discussion before presentation 
+        \item 30-40 min: main presentation
+        \item 10 min: main discussion after presentation
+    \end{itemize}
+
+\vspace{0.3cm}
+
+Format 2: Two related presentations
+\begin{itemize}
+    \item 5 min: warm-up discussion before presentation
+    \item 15-20 min: main presentation
+    \item 5 min: main discussion after presentation
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Expectations}
+
+    \begin{itemize}
+        \item<2-> Treat people with respect.
+        \item<3-> Ask questions. (Even if you need to interrupt.)
+        \item<4-> Give constructive feedback.
+        \item<5-> Start and end on time.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Introductions}
+
+\begin{itemize}
+    \item<2-> Introduce yourself to a neighbor and
+    \item<2-> Explain why you are interested in this causal inference group.
+\end{itemize}
+
+% Give 2 minutes. Then have everyone share with the group.
+    
+\end{frame}
+
+\begin{frame}{Hopes}
+
+\begin{itemize}
+    \item Give opportunity for all to present existing and new ideas,
+    \item Conduct good research,
+    \item Learn from each other and give opportunities to learn from each other, and
+    \item Work together to learn and produce work in an exciting and growing field.
+\end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Ways to Help}
+
+\begin{itemize}
+    \item Present a paper
+    \item Present a research idea
+    \item Present an R (or Python) package and explain it with reproducible examples
+    \item $\dots$
+\end{itemize}
+
+% While some people view presenting as a big deal, I would really encourage everyone to 
+% be able to contribute, and I would prioritize more smaller presentations over 
+% fewer smaller ones.
+\end{frame}
+
+\begin{frame}{Resources}
+
+\begin{itemize}
+    \item \href{https://github.com/calebleedy/ISU-Causal}{ISU Causal Inference GitHub repository}
+    \item \href{https://sites.google.com/view/ocis/}{Online Causal Inference Seminar}
+    \item \href{https://cran.r-project.org/web/views/CausalInference.html}{CRAN Task View: Causal Inference}
+\end{itemize}
+    
+\end{frame}
+
+% Survey:
+% Name:
+% Email:
+% Do you want to be part of a group email for the Causal Inference Group? Y/N
+% Why are you interested in this group?
+% What causal inference research topics are you interested in?
+% Which of these would you be willing to present?
+% What papers would you recommend to be considered for presentation?
+% What feedback do you have regarding the goals, expectations, or hopes of this group?
+
+\end{document}

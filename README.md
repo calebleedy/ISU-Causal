@@ -6,9 +6,9 @@ Welcome to the ISU Causal Inference Working Group! We meet Wednesdays from
 contains resources for what we have and intend to study. The current schedule
 is:
 
-|     Date |   Presentor |                    Topic |
-|    ----- |  ---------- |                   ------ |
-| March 22 | Caleb Leedy | Welcome and Introduction |
+|     Date |   Presentor |                                                        Topic |
+|    ----- |  ---------- |                                                       ------ |
+| March 22 | Caleb Leedy | [Welcome](Presentations/welcome_032223.pdf) and Introduction |
 
 # Folders
 
@@ -25,8 +25,7 @@ To contribute to this repository, run:
 
 ```
 git pull https://github.com/calebleedy/ISU-Causal.git
-
 ```
 
 Then make changes and submit a pull request. For help using GitHub, please talk
-to <Caleb>.
+to `Caleb`.
