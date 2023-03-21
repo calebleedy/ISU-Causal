@@ -1,6 +1,32 @@
 
 # ISU Causal Inference Working Group
 
+Welcome to the ISU Causal Inference Working Group! We meet Wednesdays from
+3:30pm - 4:30pm in 2113 Snedecor Hall. This is our group repository. It
+contains resources for what we have and intend to study. The current schedule
+is:
+
+|     Date |   Presentor |                    Topic |
+|    ----- |  ---------- |                   ------ |
+| March 22 | Caleb Leedy | Welcome and Introduction |
+
 # Folders
 
+This repository contains folders with the following information:
+
+* Papers: Contains the papers that we have studied in the future.
+* Simulations: Contains code that implements different algorithms or provides
+  examples about how existing code is to be used.
+* Presentation: Contains the presentations used by previous speakers.
+
 # Contributing
+
+To contribute to this repository, run:
+
+```
+git pull https://github.com/calebleedy/ISU-Causal.git
+
+```
+
+Then make changes and submit a pull request. For help using GitHub, please talk
+to <Caleb>.
