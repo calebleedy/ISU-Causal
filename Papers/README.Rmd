@@ -8,7 +8,10 @@ knitr::kable(df)
 
 ```
 
-# Additional Resources
+Please do *not* edit `README.md`. To add a paper to this table, please add it 
+to `paper_list.csv` and run the `compile_readme.R` script.
+
+# Additional Resources for Finding Papers
 
 * [Bradley Neal's Causal Inference
   Course](https://www.bradyneal.com/causal-inference-course)
