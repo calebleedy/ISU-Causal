@@ -7,6 +7,7 @@ output: md_document
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 
 df <- readr::read_csv("paper_list.csv")
+df$Link <- paste0("[Link](", df$Link, ")")
 knitr::kable(df)
 
 ```
