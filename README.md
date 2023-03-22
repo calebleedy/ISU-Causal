@@ -10,6 +10,8 @@ is:
 | -----    | ----------                  | ------                                                                                                                             | ---- |
 | March 22 | Hyemin Yeon and Caleb Leedy | [Welcome](Presentations/welcome_032223.pdf) and [Background: Potential Outcomes](Presentations/intro_032223.pdf) |      |
 
+**New: Please fill out our [survey](https://forms.gle/Bc3gPvWuRnTWU2gy5)**
+
 # Folders
 
 This repository contains folders with the following information:

@@ -1,0 +1,17 @@
+
+# Papers to Read
+
+```{r, echo = FALSE}
+
+df <- readr::read_csv("paper_list.csv")
+knitr::kable(df)
+
+```
+
+# Additional Resources
+
+* [Bradley Neal's Causal Inference
+  Course](https://www.bradyneal.com/causal-inference-course)
+* [Ruocheng Guo's
+  awesome-causality-algorithms](https://github.com/rguo12/awesome-causality-algorithms)
+
