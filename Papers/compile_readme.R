@@ -5,4 +5,3 @@
 # Markdown table in README.md.
 
 rmarkdown::render("README.Rmd", "all")
-file.remove("README.html")

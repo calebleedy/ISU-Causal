@@ -1,16 +1,65 @@
+# Papers to Read
 
-# Papers to Read 
-| Title                                                                                                                        | Author                         | Journal (Year) | Link                                                                                                                                                                                                                                        |
-|------------------------------------------------------------------------------------------------------------------------------|--------------------------------|----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Causal Isotonic Regression                                                                                                   | Westling, Gilbert, Carone      | JRSSB (2020)   | [Link](https://academic.oup.com/jrsssb/article/82/3/719/7056122)                                                                                                                                                                            |
-| Non-parametric methods for doubly robust estimation of continuous treatment effects                                          | Kennedy et al.                 | JRSSB (2017)   | [Link](https://www.jstor.org/stable/pdf/26773159.pdf?casa_token=Eo13KOdc7qAAAAAA:Iw5TyZtFv80bGZpmy81Tc_fshwZeIzy0tzUYd7f29nOLhXHpKMzNzjiM0r-wLZEteZRMgdKiLKehYvwS7Q8E1Pgsr0P_cqzjmsWjCixDD2Iu4S49nJo) |
-| Semiparametric theory for causal mediation analysis: Efficiency bounds, multiple robustness and sensitivity analysis | Tchetgen Tchetgen and Shpitser | AOS (2012)     | [Link](https://cepa.stanford.edu/sites/default/files/workshops/Tchetgen%20Tchetgen_Shpitser_AS%202012.pdf)                                                                                                        |
+    ## Rows: 3 Columns: 4
+    ## ── Column specification ─────────────────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (4): Title, Author, Journal (Year), Link
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 8%" />
+<col style="width: 4%" />
+<col style="width: 53%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Title</th>
+<th style="text-align: left;">Author</th>
+<th style="text-align: left;">Journal (Year)</th>
+<th style="text-align: left;">Link</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Causal Isotonic Regression</td>
+<td style="text-align: left;">Westling, Gilbert, and Carone</td>
+<td style="text-align: left;">JRSSB (2020)</td>
+<td style="text-align: left;"><a
+href="https://academic.oup.com/jrsssb/article/82/3/719/7056122"
+class="uri">https://academic.oup.com/jrsssb/article/82/3/719/7056122</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Non-parametric methods for doubly robust
+estimation of continuous treatment effects</td>
+<td style="text-align: left;">Kennedy, Ma, McHugh, and Small</td>
+<td style="text-align: left;">JRSSB (2017)</td>
+<td style="text-align: left;"><a
+href="https://www.jstor.org/stable/pdf/26773159.pdf?casa_token=TJEZ8JaJ56sAAAAA:tx8Ky11AqjTbUlbw7CDtUrAw6xzv6AfH4djH3dfWcoRCkDZaQVPbk08ZMrLzAYqwg3BWOSDaavH3poN6Vhn9j9tzID3BWJDkqCN9YVqgSRf9AwJrCxc"
+class="uri">https://www.jstor.org/stable/pdf/26773159.pdf?casa_token=TJEZ8JaJ56sAAAAA:tx8Ky11AqjTbUlbw7CDtUrAw6xzv6AfH4djH3dfWcoRCkDZaQVPbk08ZMrLzAYqwg3BWOSDaavH3poN6Vhn9j9tzID3BWJDkqCN9YVqgSRf9AwJrCxc</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Semiparametric theory for causal mediation
+analysis: Efficiency bounds, multiple robustness and sensitivity
+analysis</td>
+<td style="text-align: left;">Tchetgen Tchetgen and Shpitser</td>
+<td style="text-align: left;">AOS (2012)</td>
+<td style="text-align: left;"><a
+href="https://projecteuclid.org/journals/annals-of-statistics/volume-40/issue-3/Semiparametric-theory-for-causal-mediation-analysis--Efficiency-bounds-multiple/10.1214/12-AOS990.full"
+class="uri">https://projecteuclid.org/journals/annals-of-statistics/volume-40/issue-3/Semiparametric-theory-for-causal-mediation-analysis--Efficiency-bounds-multiple/10.1214/12-AOS990.full</a></td>
+</tr>
+</tbody>
+</table>
 
-# Additional Resources
+Please do *not* edit `README.md`. To add a paper to this table, please
+add it to `paper_list.csv` and run the `compile_readme.R` script.
 
-* [Bradley Neal's Causal Inference
-  Course](https://www.bradyneal.com/causal-inference-course)
-* [Ruocheng Guo's
-  awesome-causality-algorithms](https://github.com/rguo12/awesome-causality-algorithms)
+# Additional Resources for Finding Papers
 
+-   [Bradley Neal’s Causal Inference
+    Course](https://www.bradyneal.com/causal-inference-course)
+-   [Ruocheng Guo’s
+    awesome-causality-algorithms](https://github.com/rguo12/awesome-causality-algorithms)
