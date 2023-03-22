@@ -1,13 +1,5 @@
 # Papers to Read
 
-    ## Rows: 3 Columns: 4
-    ## ── Column specification ─────────────────────────────────────────────────────────────────────
-    ## Delimiter: ","
-    ## chr (4): Title, Author, Journal (Year), Link
-    ## 
-    ## ℹ Use `spec()` to retrieve the full column specification for this data.
-    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-
 <table>
 <colgroup>
 <col style="width: 33%" />
@@ -29,8 +21,7 @@
 <td style="text-align: left;">Westling, Gilbert, and Carone</td>
 <td style="text-align: left;">JRSSB (2020)</td>
 <td style="text-align: left;"><a
-href="https://academic.oup.com/jrsssb/article/82/3/719/7056122"
-class="uri">https://academic.oup.com/jrsssb/article/82/3/719/7056122</a></td>
+href="https://academic.oup.com/jrsssb/article/82/3/719/7056122">Link</a></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Non-parametric methods for doubly robust

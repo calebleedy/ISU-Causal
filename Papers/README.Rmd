@@ -4,7 +4,7 @@ output: md_document
 
 # Papers to Read
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
 
 df <- readr::read_csv("paper_list.csv")
 knitr::kable(df)
