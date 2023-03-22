@@ -1,0 +1,293 @@
+\documentclass[handout]{beamer} %
+\usetheme{CambridgeUS}
+\usepackage[latin1]{inputenc}
+\usefonttheme{professionalfonts}
+\usepackage{times}
+\usepackage{graphics}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{booktabs}
+
+\usepackage[style=authoryear]{biblatex}
+
+\addbibresource{~/Documents/grad_school/Research/references.bib}
+
+% theorem
+\BeforeBeginEnvironment{theorem}{
+  \setbeamercolor{block title}{fg=red!80!black,bg=gray!10!white}
+  \setbeamercolor{block body}{fg=black,bg=white}
+}
+\AfterEndEnvironment{theorem}{
+    \setbeamercolor{block title}{fg=blocktitlefgsave,bg=blocktitlebgsave}
+    \setbeamercolor{block body}{fg=blockbodyfgsave,bg=blockbodybgsave}
+}
+
+
+% definition
+\BeforeBeginEnvironment{definition}{
+  \setbeamercolor{block title}{fg=red!80!black,bg=gray!10!white}
+  \setbeamercolor{block body}{fg=black, bg=white}
+}
+\AfterEndEnvironment{definition}{
+    \setbeamercolor{block title}{fg=blocktitlefgsave,bg=blocktitlebgsave}
+    \setbeamercolor{block body}{fg=blockbodyfgsave,bg=blockbodybgsave}
+}
+
+\renewcommand{\arraystretch}{1.5}
+
+%\setbeamersize{text margin left=0.3mm,text margin right=0.1mm}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\expit}{expit}
+\DeclareMathOperator*{\Cov}{Cov}
+\DeclareMathOperator*{\Var}{Var}
+\newcommand{\R}{\mathbb{R}}
+
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, filecolor=magenta, urlcolor=blue}
+
+\author[CL]{Caleb Leedy\footnote{Thanks to Dr. Kim for sharing some of his notes.}}
+\title[Background]{Why Causal Inference?}
+
+\begin{document}
+
+\everymath{\displaystyle}
+\setbeamertemplate{title page}[default][colsep=-4bp,rounded=true]
+\setbeamertemplate{itemize items}[circle]
+\setbeamercolor{block title}{bg=red!50,fg=black}
+\frame{\titlepage}
+
+\begin{frame}{Why is causal inference important?}
+
+\begin{itemize}
+    \item Often the questions that we ask are important in their respective disciplines.
+    \item Causal inference tries to get at \textit{why} something happened.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{What is causal inference?}
+
+\begin{itemize}
+    \item Causal inference is the study and identification of treatment effects.
+    \item We want to know how an intervention changed an outcome.
+\end{itemize}
+
+\end{frame}
+
+%\begin{frame}{Association is not enough}
+%
+%% Give framework
+%
+%\end{frame}
+%
+%\begin{frame}{Association is not enough}
+%
+%% Show results
+%
+%\end{frame}
+%
+%\begin{frame}{Problem with associations}
+%
+%\begin{itemize}
+%    \item It does not consider selection bias (dependency in a DAG).
+%\end{itemize}
+%
+%\end{frame}
+
+\begin{frame}{Frameworks for Causal Inference}
+
+{\setbeamercovered{transparent}
+
+\begin{itemize}
+    \item<1-2> Potential Outcomes
+    \item<1> Directed Acyclic Graphs (DAGs)
+\end{itemize}
+}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{center}
+    {\Large Background and Notation}
+\end{center}
+
+\end{frame}
+
+\begin{frame}{Potential Outcomes}
+
+\begin{itemize}
+    \item<1-> Outcome variable $Y$
+    \item<1-> Treatment assignment $A \in \{0, 1\}$
+    \item<1-> Covariates $X$
+    \item<2-> The \textit{potential outcomes} of $Y$ for individual $i$ are
+    \[Y_i(0) \text{ and } Y_i(1).\]
+    % This means the outcome of $Y_i$ if i receives A = 0, and the outcome of $Y_i$ if 
+    % $A = 1$.
+    % Notice that the potential outcomes do NOT depend on the treatment assignment at all.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Potential Outcomes}
+
+\begin{itemize}
+    \item Often the goal is to understand: $Y(1) - Y(0)$.
+    \item<2-> For each individual $i$, we only observe \textit{either} $Y_i(0)$
+    \textit{or} $Y_i(1)$.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Assumptions}
+
+\begin{itemize}
+    \item<2-> Stable unit treatment value assumption (SUTVA): 
+    \[Y_i = Y_i(1) A_i + Y_i(0) (1 - A_i).\]
+    % The key to this assumption is that the responses (potential outcomes) for
+    % one unit are unaffected by other units.
+    % Sometimes referred to as consistency
+    \item<3-> No Unmeasured Confounders (NUC): 
+    \[Y(1), Y(0) \perp A \mid X\]
+    % Ignorability
+    % Exchangability
+    \item<4-> Positivity: For $X$ with $p(X) > 0$,
+    \[0 < \Pr(A = 1 \mid X) < 1.\]
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Goals:}
+
+\begin{itemize}
+    \item Average treatment effect (ATE): 
+    \[E[Y(1) - Y(0)]\]
+    \item Average treatment effect of the treated (ATT): 
+    \[E[Y(1) - Y(0) \mid A = 1]\]
+    \item Conditional average treatment effect (CATE):
+    \[E[Y(1) - Y(0) \mid X]\]
+    \item Individual treatment effect (ITE): 
+    \[Y_i(1) - Y_i(0)\]
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Average Treatment Effect}
+
+\begin{itemize}
+    \item Consider the ATE denoted by 
+    \[\tau = E[Y(1) - Y(0)].\]
+\end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Outcome Model}
+
+\begin{itemize}
+    \item From our assumptions, $E[Y(a)] = E[E[Y \mid X, A = a]]$.
+    \item We can construct a model, $m_a(X) = E[Y \mid X, A = a]$ and estimate $\tau$
+    using
+    \[\hat \tau_{\text{OR}} = \hat m_1(X) - \hat m_0(X).\]
+    \item If the model for $\hat m_a(X)$ is correctly specified, $\hat \tau_{\text{OR}}$
+    is consistent.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Propensity Score}
+
+\begin{itemize}
+    \item Instead of modeling the outcome $E[Y \mid X]$ we can model the 
+    response probability $\pi(X) = \Pr(A = 1 \mid X)$.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Inverse Propensity Score Weighting}
+
+\begin{itemize}
+    \item If $\pi(X)$ is known then we can estimate $\tau$ with 
+    $\hat \tau_{\text{IPW}} = \hat \mu_1 - \hat \mu_0$. 
+    \item We estimate $E[Y(1)]$ with
+    \[\hat \mu_1 = n^{-1} \sum_{i = 1}^n \frac{A_i Y_i}{\pi(X_i)}.\]
+    \item We can estimate $E[Y(0)]$ with
+    \[\hat \mu_0 = n^{-1} \sum_{i = 1}^n \frac{(1 - A_i) Y_i}{1 - \pi(X_i)}.\]
+    \item This is similar to a Horvitz-Thompson estimator.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Result}
+
+\begin{itemize}
+    \item The IPW estimator is consistent.
+    \begin{align*}
+        E\left[\frac{AY}{\pi(X)}\right] 
+        &= E\left[\frac{AY(1)}{\pi(X)}\right] \\
+        &= E\left[E\left[\frac{AY(1)}{\pi(X)}\right] \mid Y(1), X\right]\\
+        &= E\left[E\left[\frac{AY(1)}{\pi(X)}\right] \mid X\right]\\
+        &= E\left[\frac{\pi(X)Y(1)}{\pi(X)}\right] \\
+        &= E[Y(1)].
+    \end{align*}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Double Robust Estimation}
+
+\begin{itemize}
+    \item We can combine our outcome model and response model together to get a doubly
+    robust estimator: $\hat \tau_{\text{DR}} = \hat \mu_{1, \text{DR}} - \hat \mu_{0, \text{DR}}$ where
+    \[\hat \mu_{1,\text{DR}} = n^{-1} \sum_{i = 1}^n \left(m_1(x_i) + \frac{A_i}{\hat \pi(X_i)}(Y_i - m_1(x_i))\right)\]
+    and 
+    \[\hat \mu_{0,\text{DR}} = n^{-1} \sum_{i = 1}^n \left(m_0(x_i) + \frac{1 - A_i}{1 - \hat \pi(X_i)}(Y_i - m_0(x_i))\right).\]
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Result}
+
+\begin{itemize}
+    \item $\hat \tau_{\text{DR}}$ is consistent if either the outcome or the response
+    model is true.
+    \item If the outcome model is correctly specified ($m_1(x) = E[Y(1) \mid X]$), then
+    \begin{align*}
+    E[\hat \mu_{1, \text{DR}}] 
+    &=  n^{-1} \sum_{i = 1}^n \left(E[m_1(x_i)] + E\left[\frac{A_i}{\hat \pi(X_i)} E[Y_i - m_1(x_i) \mid X]\right] \right)\\
+    &=  n^{-1} \sum_{i = 1}^n E[m_1(x_i)]\\
+    &=  E[Y(1)].
+    \end{align*}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Result}
+
+\begin{itemize}
+    \item If the response model is correctly specified ($\hat \pi(X) = \pi(X)$), then
+    \begin{align*}
+    E[\hat \mu_{1, \text{DR}}] 
+    &=  n^{-1} \sum_{i = 1}^n E\left[\left(1 - \frac{A_i}{\pi(X_i)}\right)m_1(x_i) 
+    + \frac{A_i}{\pi(X_i)}Y_i\right]\\
+    &=  n^{-1} \sum_{i = 1}^n E\left[E\left[\left(1 - \frac{A_i}{\pi(X_i)}\right)m_1(x_i) 
+    + \frac{A_i}{\pi(X_i)}Y_i\mid X\right]\right]\\
+    &=  n^{-1} \sum_{i = 1}^n E\left[\left(1 - \frac{\pi(X_i)}{\pi(X_i)}\right)m_1(x_i) 
+    + \frac{\pi(X_i)}{\pi(X_i)}Y_i(1)\right]\\
+    &= E[Y(1)].
+    \end{align*}
+\end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Next Week}
+
+\begin{itemize}
+    \item Estimation of ATE
+    \item Instrumental variables (IVs)
+\end{itemize}
+
+\end{frame}
+
+\end{document}
