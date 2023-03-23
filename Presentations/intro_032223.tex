@@ -49,7 +49,8 @@
 \usepackage{hyperref}
 \hypersetup{colorlinks=true, linkcolor=blue, filecolor=magenta, urlcolor=blue}
 
-\author[CL]{Caleb Leedy\footnote{Thanks to Dr. Kim for sharing some of his notes.}}
+\author[CL]{Caleb Leedy\footnote{Thanks to Dr. Kim for sharing some of his
+notes.}}
 \title[Background]{Why Causal Inference?}
 
 \begin{document}
@@ -63,7 +64,8 @@
 \begin{frame}{Why is causal inference important?}
 
 \begin{itemize}
-    \item Often the questions that we ask are important in their respective disciplines.
+    \item Often the questions that we ask are important in their respective
+      disciplines.
     \item Causal inference tries to get at \textit{why} something happened.
 \end{itemize}
 
@@ -126,9 +128,10 @@
     \item<1-> Covariates $X$
     \item<2-> The \textit{potential outcomes} of $Y$ for individual $i$ are
     \[Y_i(0) \text{ and } Y_i(1).\]
-    % This means the outcome of $Y_i$ if i receives A = 0, and the outcome of $Y_i$ if 
-    % $A = 1$.
-    % Notice that the potential outcomes do NOT depend on the treatment assignment at all.
+    % This means the outcome of $Y_i$ if i receives A = 0, and the outcome of
+    % $Y_i$ if $A = 1$.
+    % Notice that the potential outcomes do NOT depend on the treatment
+    % assignment at all.
 \end{itemize}
 
 \end{frame}
@@ -189,11 +192,11 @@
 
 \begin{itemize}
     \item From our assumptions, $E[Y(a)] = E[E[Y \mid X, A = a]]$.
-    \item We can construct a model, $m_a(X) = E[Y \mid X, A = a]$ and estimate $\tau$
-    using
+    \item We can construct a model, $m_a(X) = E[Y \mid X, A = a]$ and estimate
+      $\tau$ using
     \[\hat \tau_{\text{OR}} = \hat m_1(X) - \hat m_0(X).\]
-    \item If the model for $\hat m_a(X)$ is correctly specified, $\hat \tau_{\text{OR}}$
-    is consistent.
+    \item If the model for $\hat m_a(X)$ is correctly specified, 
+      $\hat \tau_{\text{OR}}$ is consistent.
 \end{itemize}
 
 \end{frame}
@@ -227,9 +230,8 @@
     \begin{align*}
         E\left[\frac{AY}{\pi(X)}\right] 
         &= E\left[\frac{AY(1)}{\pi(X)}\right] \\
-        &= E\left[E\left[\frac{AY(1)}{\pi(X)}\right] \mid Y(1), X\right]\\
-        &= E\left[E\left[\frac{AY(1)}{\pi(X)}\right] \mid X\right]\\
-        &= E\left[\frac{\pi(X)Y(1)}{\pi(X)}\right] \\
+        &= E\left[E\left[\frac{AY(1)}{\pi(X)} \mid Y(1), X\right]\right] \\
+        &= E\left[Y(1) E\left[\frac{A}{\pi(X)} \mid X\right]\right]\\
         &= E[Y(1)].
     \end{align*}
 \end{itemize}
@@ -239,26 +241,38 @@
 \begin{frame}{Double Robust Estimation}
 
 \begin{itemize}
-    \item We can combine our outcome model and response model together to get a doubly
-    robust estimator: $\hat \tau_{\text{DR}} = \hat \mu_{1, \text{DR}} - \hat \mu_{0, \text{DR}}$ where
-    \[\hat \mu_{1,\text{DR}} = n^{-1} \sum_{i = 1}^n \left(m_1(x_i) + \frac{A_i}{\hat \pi(X_i)}(Y_i - m_1(x_i))\right)\]
+    \item We can combine our outcome model and response model together to get a
+      doubly robust estimator: $\hat \tau_{\text{DR}} = \hat \mu_{1, \text{DR}}
+      - \hat \mu_{0, \text{DR}}$ where
+    \[\hat \mu_{1,\text{DR}} = n^{-1} \sum_{i = 1}^n \left(m_1(x_i) + 
+    \frac{A_i}{\hat \pi(X_i)}(Y_i - m_1(x_i))\right)\]
     and 
-    \[\hat \mu_{0,\text{DR}} = n^{-1} \sum_{i = 1}^n \left(m_0(x_i) + \frac{1 - A_i}{1 - \hat \pi(X_i)}(Y_i - m_0(x_i))\right).\]
+    \[\hat \mu_{0,\text{DR}} = n^{-1} \sum_{i = 1}^n \left(m_0(x_i) + 
+    \frac{1 - A_i}{1 - \hat \pi(X_i)}(Y_i - m_0(x_i))\right).\]
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Result}
 
 \begin{itemize}
-    \item $\hat \tau_{\text{DR}}$ is consistent if either the outcome or the response
-    model is true.
-    \item If the outcome model is correctly specified ($m_1(x) = E[Y(1) \mid X]$), then
+    \item $\hat \tau_{\text{DR}}$ is consistent if either the outcome or the
+      response model is true.
+    \item If the outcome model is correctly specified ($m_1(x) = E[Y(1) \mid
+      X]$), then
+      {\footnotesize
     \begin{align*}
-    E[\hat \mu_{1, \text{DR}}] 
-    &=  n^{-1} \sum_{i = 1}^n \left(E[m_1(x_i)] + E\left[\frac{A_i}{\hat \pi(X_i)} E[Y_i - m_1(x_i) \mid X]\right] \right)\\
+      &E[\hat \mu_{1, \text{DR}}] \\
+    &=  n^{-1} \sum_{i = 1}^n \left(E[m_1(x_i)] + 
+      E\left[E\left[\left(\frac{A_i}{\hat \pi(X_i)}\right) (Y_i(1) - m_1(x_i)) 
+      \mid X \right]\right] \right)\\
+    &=  n^{-1} \sum_{i = 1}^n \left(E[m_1(x_i)] + 
+      E\left[E\left[\left(\frac{A_i}{\hat \pi(X_i)}\right) \mid X\right] 
+      E\left[(Y_i(1) - m_1(x_i))
+      \mid X\right]\right] \right)\\
     &=  n^{-1} \sum_{i = 1}^n E[m_1(x_i)]\\
     &=  E[Y(1)].
     \end{align*}
+    }
 \end{itemize}
 
 \end{frame}
@@ -266,13 +280,14 @@
 \begin{frame}{Result}
 
 \begin{itemize}
-    \item If the response model is correctly specified ($\hat \pi(X) = \pi(X)$), then
+    \item If the response model is correctly specified ($\hat \pi(X) = \pi(X)$),
+      then
     \begin{align*}
-    E[\hat \mu_{1, \text{DR}}] 
+      E&[\hat \mu_{1, \text{DR}}] \\
     &=  n^{-1} \sum_{i = 1}^n E\left[\left(1 - \frac{A_i}{\pi(X_i)}\right)m_1(x_i) 
     + \frac{A_i}{\pi(X_i)}Y_i\right]\\
     &=  n^{-1} \sum_{i = 1}^n E\left[E\left[\left(1 - \frac{A_i}{\pi(X_i)}\right)m_1(x_i) 
-    + \frac{A_i}{\pi(X_i)}Y_i\mid X\right]\right]\\
+    + \frac{A_i}{\pi(X_i)}Y_i\mid X, Y\right]\right]\\
     &=  n^{-1} \sum_{i = 1}^n E\left[\left(1 - \frac{\pi(X_i)}{\pi(X_i)}\right)m_1(x_i) 
     + \frac{\pi(X_i)}{\pi(X_i)}Y_i(1)\right]\\
     &= E[Y(1)].
