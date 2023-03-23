@@ -2,4 +2,5 @@
 Causal Isotonic Regression,"Westling, Gilbert, and Carone",JRSSB (2020),https://academic.oup.com/jrsssb/article/82/3/719/7056122
 Non-parametric methods for doubly robust estimation of continuous treatment effects,"Kennedy, Ma, McHugh, and Small",JRSSB (2017),https://www.jstor.org/stable/pdf/26773159.pdf?casa_token=TJEZ8JaJ56sAAAAA:tx8Ky11AqjTbUlbw7CDtUrAw6xzv6AfH4djH3dfWcoRCkDZaQVPbk08ZMrLzAYqwg3BWOSDaavH3poN6Vhn9j9tzID3BWJDkqCN9YVqgSRf9AwJrCxc
 "Semiparametric theory for causal mediation analysis: Efficiency bounds, multiple robustness and sensitivity analysis",Tchetgen Tchetgen and Shpitser,AOS (2012),https://projecteuclid.org/journals/annals-of-statistics/volume-40/issue-3/Semiparametric-theory-for-causal-mediation-analysis--Efficiency-bounds-multiple/10.1214/12-AOS990.full
-
+Covariate balancing propensity score,Imai and Ratkovic,JRSSB (2014),https://www.jstor.org/stable/pdf/24772753.pdf?casa_token=MfBrEURo2XIAAAAA:S96mD6UfkAkb4ZSevnW7BDcuzw-dvwrZrMkO22i0ArDKsG_0pdopv7yAfsry3fT8uP96DrermElFd_Hto8cSvzzQ6TBwhDnY7P7J3aLQCBjrY0CHCUY
+Model-assisted inference for treatment effects using regularized calibrated estimation with high-dimensional data,Tan,AOS (2020),https://projecteuclid.org/journals/annals-of-statistics/volume-48/issue-2/Model-assisted-inference-for-treatment-effects-using-regularized-calibrated-estimation/10.1214/19-AOS1824.short

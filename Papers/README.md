@@ -40,6 +40,22 @@ analysis</td>
 <td style="text-align: left;"><a
 href="https://projecteuclid.org/journals/annals-of-statistics/volume-40/issue-3/Semiparametric-theory-for-causal-mediation-analysis--Efficiency-bounds-multiple/10.1214/12-AOS990.full">Link</a></td>
 </tr>
+<tr class="even">
+<td style="text-align: left;">Covariate balancing propensity score</td>
+<td style="text-align: left;">Imai and Ratkovic</td>
+<td style="text-align: left;">JRSSB (2014)</td>
+<td style="text-align: left;"><a
+href="https://www.jstor.org/stable/pdf/24772753.pdf?casa_token=MfBrEURo2XIAAAAA:S96mD6UfkAkb4ZSevnW7BDcuzw-dvwrZrMkO22i0ArDKsG_0pdopv7yAfsry3fT8uP96DrermElFd_Hto8cSvzzQ6TBwhDnY7P7J3aLQCBjrY0CHCUY">Link</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Model-assisted inference for treatment
+effects using regularized calibrated estimation with high-dimensional
+data</td>
+<td style="text-align: left;">Tan</td>
+<td style="text-align: left;">AOS (2020)</td>
+<td style="text-align: left;"><a
+href="https://projecteuclid.org/journals/annals-of-statistics/volume-48/issue-2/Model-assisted-inference-for-treatment-effects-using-regularized-calibrated-estimation/10.1214/19-AOS1824.short">Link</a></td>
+</tr>
 </tbody>
 </table>
 
