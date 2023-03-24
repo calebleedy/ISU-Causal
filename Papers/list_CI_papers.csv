@@ -1,0 +1,35 @@
+﻿category,year,authors,title,journal,link
+bayes,2011,Hill,Bayesian Nonparametric Modeling for Causal Inference,JCGS,https://doi.org/10.1198/jcgs.2010.08162
+DAG,2012,"Colombo, Maathuis, Kalisch, and Richardson",Learning high-dimensional directed acyclic graphs with latent and selection variables,AoS,10.1214/11-AOS940
+mediation,2012,Tchetgen Tchetgen and Shpitser,"Semiparametric theory for causal mediation analysis: Efficiency bounds, multiple robustness and sensitivity analysis",AoS,
+confounder,2013,VanderWeele and Shpitser,On the definition of a confounder,AoS,10.1214/12-AOS1058
+intervention,2016,Shpitser and Tchetgen Tchetgen,Causal inference with a graphical hierarchy of interventions,AoS,10.1214/15-AOS1411
+cont trt,2017,"Kennedy, Ma, McHugh, and Small",Non-parametric methods for doubly robust estimation of continuous treatment effects,"JRSS, B",
+cont outcome,2017,Lok,Mimicking counterfactual outcomes to estimate causal effects,AoS,
+intervention,2017,Rudolph and Van der Laan,Robust Estimation of Encouragement Design Intervention Effects Transported Across Sites,"JRSS, B",https://academic.oup.com/jrsssb/article/79/5/1509/7040955
+confidence intervals,2018,"Guo, Kang, Cai, and Small",Confidence Intervals for Causal Effects with Invalid Instruments by Using Two-Stage Hard Thresholding with Voting,"JRSS, B",https://doi.org/10.1111/rssb.12275
+SEM,2018,"Rothenhäusler, Ernest, and Bühlmann",Causal inference in partially linear structural equation models,AoS,10.1214/17-AOS1643
+instrumental variables,2019,"Windmeijer, Fabmacher, Davies, and Smith",On the use of the lasso for instrumental variables estimation with some invalid instruments,JASA,https://doi.org/10.1080/01621459.2018.1498346
+mediation,2020,Diaz and Hejazi,Causal mediation analysis for stochastic interventions,"JRSS, B",
+bayes,2020,"Hahn, Murray, and Carvalho","Bayesian Regression Tree Models for Causal Inference: Regularization, Confounding, and Heterogeneous Effects (with Discussion)",BA,10.1214/19-BA1195
+bayes,2020,Ray and van der Vaart,Semiparametric Bayesian causal inference,AoS,10.1214/19-AOS1919
+??,2020,"Shi, Miao, Nelson, and Tchetgen Tchetgen",Multiply Robust Causal Inference with Double-Negative Control Adjustment for Categorical Unmeasured Confounding ,"JRSS, B",https://doi.org/10.1111/rssb.12361
+cont trt,2020,"Westling, Gilbert, and Carone",Causal isotonic regression,"JRSS, B",
+??,2020,Yang and Ding,Combining Multiple Observational Data Sources to Estimate Causal Effects,JASA,https://doi.org/10.1080/01621459.2019.1609973
+assumption-lean,2021,Park and Kang,Assumption-Lean Analysis of Cluster Randomized Trials in Infectious Diseases for Intent-to-Treat Effects and Network Effects,JASA,https://doi.org/10.1080/01621459.2021.1983437
+spatial confounding,2021,"Reich, Yang, et al.",A Review of Spatial Causal Inference Methods for Environmental and Epidemiological Applications,International Statistical Review,
+network,2021,"Tchetgen Tchetgen, Fulcher, and Shpitser",Auto-G-Computation of Causal Effects on a Network,JASA,https://doi.org/10.1080/01621459.2020.1811098
+??,2022,Cohen and Fogarty,Gaussian Prepivoting for Finite Population Causal Inference ,"JRSS, B",https://doi.org/10.1111/rssb.12439
+DAG,2022,"Henckel, Perkovic, and Maathuis",Graphical criteria for efficient total effect estimation via adjustment in causal linear models,"JRSS, B",https://doi.org/10.1111/rssb.12451
+??,2022,"Jiang, Yang, and Ding",Multiply Robust Estimation of Causal Effects under Principal Ignorability ,"JRSS, B",https://doi.org/10.1111/rssb.12538
+network,2022,"Ogburn, Sofrygin, Diaz, and Van der Laan",Causal inference for social network data,JASA,
+spatial-temporal,2022,"Papadogeorgou, Imai, Lyall, and Li",Causal Inference with Spatio-Temporal Data: Estimating the Effects of Airstrikes on Insurgent Violence in Iraq,"JRSS, B",https://doi.org/10.1111/rssb.12548
+assumption-lean,2022,Vansteelandt and Dukes,Assumption-lean Inference for Generalised Linear Model Parameters,"JRSS, B",https://doi.org/10.1111/rssb.12504
+data integration,2022,"Xhi, Pan, and Miao",Data integration in causal inference,WIREs Computational Statistics,https://doi.org/10.1002/wics.1581
+data integration,2022,"Yang , Gao, Zhen, and Wang",Elastic integrative analysis of randomized trial and real-world data for treatment heterogeneity estimation,"JRSS, B",https://arxiv.org/abs/2005.10579
+??,2022,Zhao and Ding,Reconciling design-based and model-based causal inferences for split-plot experiments,AoS,10.1214/21-AOS2144
+data integration,2023,Colnet et al.,Causal inference methods for combining randomized trials and observational studies: a review,SS,https://arxiv.org/abs/2011.08047
+??,2023,Cui et al.,Semiparametric proximal causal inference,JASA,https://doi.org/10.1080/01621459.2023.2191817
+spatial confounding,2023,"Gilbert, Datta, Casey, and Ogburn",A causal inference framework for spatial confounding,ArXiv:2112.14946,
+tests,2023,Westling,Nonparametric tests of the causal null with non-discrete exposures,JASA,https://doi.org/10.1080/01621459.2020.1865168
+,,,,,

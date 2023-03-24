@@ -6,9 +6,26 @@ output: md_document
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
 
-df <- readr::read_csv("paper_list.csv")
-df$Link <- paste0("[Link](", df$Link, ")")
-knitr::kable(df)
+library(dplyr)
+library(tidyr)
+library(stringr)
+library(readr)
+library(knitr)
+
+df <- readr::read_csv("list_CI_papers.csv")
+names(df) <- str_to_title(names(df))
+
+df %>%
+  select(Title, Authors, Journal, Year, Category, Link) %>%
+  mutate(Journal = str_replace(Journal, " ", "")) %>%
+  mutate(Journal = str_replace(Journal, ",", "")) %>%
+  mutate(Year = str_glue("({Year})")) %>% 
+  unite(`Journal(Year)`, Journal, Year, sep = " ") %>%
+  mutate(Link = ifelse(is.na(Link), "", str_glue("[Link]({Link})"))) %>% 
+  filter(!is.na(Title)) %>%
+  kable()
+
+
 
 ```
 
