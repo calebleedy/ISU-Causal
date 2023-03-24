@@ -12,8 +12,9 @@ library(stringr)
 library(readr)
 library(knitr)
 
-df <- readr::read_csv("list_CI_papers.csv")
+df <- readr::read_csv("paper_list.csv")
 names(df) <- str_to_title(names(df))
+
 
 df %>%
   select(Title, Authors, Journal, Year, Category, Link) %>%
