@@ -28,14 +28,7 @@ This repository contains folders with the following information:
 
 # Contributing
 
-To contribute to this repository, run:
-
-```
-git pull https://github.com/calebleedy/ISU-Causal.git
-```
-
-Then make changes and submit a pull request. For help using GitHub, please talk
-to `Caleb`.
+To contribute to this repository, see [Contributing.md](Contributing.md).
 
 # Resources
 
