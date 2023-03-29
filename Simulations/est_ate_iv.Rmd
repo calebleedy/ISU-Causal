@@ -16,6 +16,7 @@ output: pdf_document
 
 ```{r setup, warnings=FALSE, messages=FALSE}
 
+# For data cleaning and manipulation
 library(dplyr)
 library(rlang)
 library(stringr)
@@ -23,34 +24,27 @@ library(tidyr)
 library(purrr)
 library(knitr)
 
+# For parallelization
 library(doParallel)
 library(doRNG)
 library(parallelly)
 
+# For additional aipw and iv estimators
 library(grf)
-library(AIPW)
-library(DoubleML)
-library(mlr3)
-library(mlr3learners)
 library(ivreg)
 
 expit <- function(x) {1 / (1 + exp(-x))}
+
+set.seed(1)
 
 ```
 
 ## Data Generating Models
 
-With Unconfoundedness
-
-* Linear outcome, linear response
-* Nonlinear outcome, linear response
-* Linear outcome, nonlinear response
-* Nonlinear outcome, nonlinear response 
-
-Without Unconfoundedness
-
-* Same as above with strong instruments
-* With weak instruments
+First, we create a data generating function for later simulations of the
+potential outcomes framework. This function is designed to be sufficiently
+general in that a user can modify the function inputs to easily test different
+simulation settings.
 
 ```{r data gen}
 
@@ -125,12 +119,22 @@ create_data <- function(n, outcome_str, response_str, tau_str,
 
 # Identifying Causal Effects
 
-* Outcome model
-* Response model
-* AIPW
+To estimate the average treatment effect, we implement three algorithms
+following the procedure in the Potential Outcomes slides. These algorithms use
+estimate a linear outcome model, a logistic response model, and an AIPW model
+that combines the linear outcome and logistic response model. Again, these
+functions are designed to be sufficiently general so that users can define the
+functional forms (coefficients) in these models via the parameters. To do this
+input a string with R formula syntax as a parameter to `mod_str` 
+or `out_mod_str` or `resp_mod_str`. See the simulations below for more examples.
 
 ```{r potential outcomes functions}
 
+#' This function constructs an outcome model to estimate the ATE.
+#'
+#' @param df A data frame generated from the create_data function.
+#' @param mod_str A string. This string determines the functional form used in
+#' the linear outcome model. See the simulations below for more examples.
 outcome_mod <- function(df, mod_str) {
 
   mod_str <- str_to_upper(mod_str)
@@ -156,6 +160,11 @@ outcome_mod <- function(df, mod_str) {
   return(list(tau = tau_hat, var = est_var))
 }
 
+#' This function constructs a response model to estimate the ATE.
+#'
+#' @param df A data frame generated from the create_data function.
+#' @param mod_str A string. This string determines the functional form used in
+#' the logistic response model. See the simulations below for more examples.
 response_mod <- function(df, mod_str) {
 
   mod_str <- str_to_upper(mod_str)
@@ -178,6 +187,13 @@ response_mod <- function(df, mod_str) {
   return(list(tau = tau_hat, var = est_var))
 }
 
+#' This function constructs an AIPW model to estimate the ATE.
+#'
+#' @param df A data frame generated from the create_data function.
+#' @param out_mod_str A string. This string determines the functional form used 
+#' in the linear outcome model.
+#' @param resp_mod_str A string. This string determines the functional form used 
+#' in the logistic response model. See the simulations below for more examples.
 custom_aipw <- function(df, out_mod_str, resp_mod_str) {
 
   # Outcome Model Estimation
@@ -222,6 +238,44 @@ custom_aipw <- function(df, out_mod_str, resp_mod_str) {
 
 ```
 
+## Running the Simulations
+
+The following code simulates the estimation of the average treatment effect
+using different algorithms that use the potential outcomes framework. I
+encourage readers to change some of the parameters to explore the weaknesses of
+each algorithm. The parameters are the following:
+
+* `true_tau`: This is the magnitude of the true average treatment effect. The
+  way that the data is generated it could be a function of another variable but
+  this has not been tested *and* the subsequent t-test will only work with a
+  constant tau.
+* `y_mod_str`: This stringdefines the model $`Y = X\beta`$. As currently 
+  written, the different distributions of $x_i$ are only available up 
+  from $`x_1, \dots, x_{10}`$ with different distributions seen in the code for
+  the function `create_data`.
+* `response_model`: This string determines the probability that each element is
+  selected for treatment. Most algorithms do better with balanced data. Also, we
+  have assumed that the probability of being in a treatment group is bounded
+  away from zero. If this does not occurs, the algorithms will probably perform
+  worse.
+* `out_mod_form`: This string determines the functional form of any outcome
+  model that is being used.
+* `resp_mod_form`: This string determines the functional form of any response
+  model that is being used.
+
+If you have more computing power, one can increase the number of 
+observations `n_obs` or the number of Monte Carlo simulations `B`. However, when
+running in local interactive use, I recommend commenting out the causal forest
+because it is much longer then the other algorithms.
+
+Additional scenarios I recommend trying include: unbalanced data, NMAR, model
+misspecification in the outcome and response models, asymmetric covariates, or
+any combination of the above. All of the covariates have mean zero and variance
+one because I thought that initially this would be important for understanding
+the true value; however, I don't think that this matters. If desired, feel free
+to change some (or add additional) parameters to the `create_data` function to
+use.
+
 ```{r mcmc potential outcomes, warnings=FALSE, messages=FALSE}
 
 clust <- makeCluster(availableCores() - 2)
@@ -229,8 +283,8 @@ registerDoParallel(clust)
 
 B <- 1000
 
-mcmc_res <- 
-  foreach(iter = 1:B, .packages = c("stringr", "dplyr")) %dorng% {
+ptoc_res <- 
+  foreach(iter = 1:B, .packages = c("stringr", "dplyr", "grf")) %dorng% {
 
     if (iter %% 100 == 0) {
       print(paste0("Iter: ", iter))
@@ -262,6 +316,10 @@ mcmc_res <-
                   out_mod_str = out_mod_form,            # Correctly specified
                   resp_mod_str = resp_mod_form)          # Correctly specified
 
+    # Causal forest
+    # NOTE: For more interactive local use, I recommend not running the causal
+    # forest. It takes significantly longer than the other algorithms.
+    cf_res <- -1
     x_mat <- 
       model.matrix(as.formula(paste0("~", str_to_upper(out_mod_form))),
                    data = df)
@@ -280,10 +338,12 @@ stopCluster(clust)
 
 ```
 
+After running the simulations we test for unbiasedness in the mean.
+
 ```{r test results potential outcomes}
 
 # NOTE: The t-test only works for a constant tau.
-mcmc_res %>%
+ptoc_res %>%
   summarize(
     mean_out = mean(out),
     mean_resp = mean(resp),
@@ -293,29 +353,59 @@ mcmc_res %>%
     var_resp = var(resp),
     var_aipw = var(aipw),
     var_cf = var(cf),
-    tstat_out = (mean(out) - mean(true)) / (sqrt(var(out) / nrow(mcmc_res))),
-    tstat_resp = (mean(resp) - mean(true)) / (sqrt(var(resp) / nrow(mcmc_res))),
-    tstat_cf = (mean(cf) - mean(true)) / (sqrt(var(cf) / nrow(mcmc_res))),
-    tstat_aipw = (mean(aipw) - mean(true)) / (sqrt(var(aipw) / nrow(mcmc_res)))
+    tstat_out = (mean(out) - mean(true)) / (sqrt(var(out) / nrow(ptoc_res))),
+    tstat_resp = (mean(resp) - mean(true)) / (sqrt(var(resp) / nrow(ptoc_res))),
+    tstat_cf = (mean(cf) - mean(true)) / (sqrt(var(cf) / nrow(ptoc_res))),
+    tstat_aipw = (mean(aipw) - mean(true)) / (sqrt(var(aipw) / nrow(ptoc_res)))
   ) %>%
   pivot_longer(cols = everything(),
                names_to = c(".value", "algorithm"),
                names_pattern = "(.*)_(.*)") %>%
   mutate(pval = ifelse(tstat < 0,
-                       pt(tstat, df = nrow(mcmc_res)),
-                       pt(-tstat, df = nrow(mcmc_res)))) %>%
+                       pt(tstat, df = nrow(ptoc_res)),
+                       pt(-tstat, df = nrow(ptoc_res)))) %>%
   knitr::kable(digits = 3)
 
 ```
 
 # Instrumental Variables
 
-* 2SLS
-* Non cross fit
-* Cross-fit
+After simulating algorithms in the potential outcomes framework, we modify our
+approach so that we have an instrumental variable setup. Overall, the structure
+of the code is similar as above. We start with a function to create the data,
+then we move to estimation. Unlike the previous simulations, however, this
+simulation only uses algorithms from existing packages.
+
+In this IV setup, we have the assigned treatment, `A`, which can differ from the
+observed treatment, `obs_treat`. Since some units always do the same thing no
+matter what, the observed treatment is correlated with the outcome error. So we
+use the assigned treatment `A` as an instrument. The bias that occurs is to be
+expected because IV methods are not unbiased.
+
+Overall, I have less confidence in this simulation then the previous one. If you
+find any errors, please let me know and (ideally) submit a pull request to the
+GitHub repo.
+
+In addition to some of the same kind of modifications one can make to the
+previous simulation, one can also run the simulation with the instrument being
+weaker, which makes the problem harder.
 
 ```{r iv generate data}
 
+#' The create_iv function generates different kinds of data for estimating IV
+#' problems.
+#'
+#' @param n An integer for the number of samples
+#' @param outcome_expr A string 
+#' @param response_str A string
+#' @param tau_str A string
+#' @param always_frac A double
+#' @param never_frac A double
+#' @param show_pi_quantiles A boolean
+#'
+#' @details outcome_str, response_str, and tau_str can only display
+#' functions of x1, x2, x3, x4, x5, x6, x7, x8, x9, x10.
+#' @note always_frac + never_frac <= 1 and both should be nonnegative.
 create_iv <- function(n, outcome_str, response_str, tau_str,
                       always_frac = 0,
                       never_frac = 0.2,
@@ -398,18 +488,78 @@ create_iv <- function(n, outcome_str, response_str, tau_str,
 
 ```
 
-```{r est iv ate}
+```{r est iv}
 
-true_tau = 2
-df <- create_iv(n = 1000,
-                outcome_str = y_mod_str,
-                response_str = response_model,
-                tau_str = as.character(true_tau))
+clust <- makeCluster(availableCores() - 2)
+registerDoParallel(clust)
 
-ivreg(Y ~ X1 + X2 + X3 | obs_treat | A, data = df)
+B <- 1000
 
+iv_res <- 
+  foreach(iter = 1:B, 
+          .packages = c("stringr", "dplyr", "ivreg", "grf")) %dorng% {
+
+    if (iter %% 100 == 0) {
+      print(paste0("Iter: ", iter))
+    }
+
+    # Parameters
+    true_tau <- 2
+    n_obs <- 1000
+
+    # These are true values
+    y_mod_str <- "3 + x1 - 0.5 * x2 + 1.2 * x3"
+    response_model <- "x1 + 1.2 * x2"
+
+    # These are functional forms of estimated models
+    # Use formula notation.
+    out_mod_form <- "x1 + x2 + x3"
+    resp_mod_form <- "x1 + x2"
+
+    df <- create_iv(n = 1000,
+                    outcome_str = y_mod_str,
+                    response_str = response_model,
+                    tau_str = as.character(true_tau))
+
+    # 2SLS using ivreg package
+    ivreg_form <- 
+      as.formula(paste0("Y ~",  str_to_upper(out_mod_form), " | obs_treat | A"))
+    twosls_res <- ivreg(ivreg_form, data = df)
+
+    # LATE using grf package
+    x_mat <- 
+      model.matrix(as.formula(paste0("~", str_to_upper(out_mod_form))),
+                   data = df)
+    iv_for <- 
+      instrumental_forest(X = x_mat, Y = df$Y, W = df$obs_treat, Z = df$A)
+    for_res <- average_treatment_effect(iv_for)
+
+    tibble(true = true_tau,
+           twosls = twosls_res$coefficients[2],
+           cf = for_res[1])
+
+  } %>%
+  bind_rows()
+
+stopCluster(clust)
+
+iv_res %>%
+  summarize(
+    mean_twosls = mean(twosls),
+    mean_cf = mean(cf),
+    var_twosls = var(twosls),
+    var_cf = var(cf),
+    tstat_twosls = (mean(twosls) - mean(true)) / (sqrt(var(twosls) / nrow(iv_res))),
+    tstat_cf = (mean(cf) - mean(true)) / (sqrt(var(cf) / nrow(iv_res))),
+  ) %>%
+  pivot_longer(cols = everything(),
+               names_to = c(".value", "algorithm"),
+               names_pattern = "(.*)_(.*)") %>%
+  mutate(pval = ifelse(tstat < 0,
+                       pt(tstat, df = nrow(iv_res)),
+                       pt(-tstat, df = nrow(iv_res)))) %>%
+  knitr::kable(digits = 3)
 
 
 ```
 
-# Local Average Treatment Effects
