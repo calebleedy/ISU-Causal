@@ -249,7 +249,7 @@ each algorithm. The parameters are the following:
   way that the data is generated it could be a function of another variable but
   this has not been tested *and* the subsequent t-test will only work with a
   constant tau.
-* `y_mod_str`: This stringdefines the model $`Y = X\beta`$. As currently 
+* `y_mod_str`: This string defines the model $`Y = X\beta`$. As currently 
   written, the different distributions of $x_i$ are only available up 
   from $`x_1, \dots, x_{10}`$ with different distributions seen in the code for
   the function `create_data`.
