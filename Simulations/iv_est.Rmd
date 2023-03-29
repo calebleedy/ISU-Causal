@@ -1,0 +1,415 @@
+---
+title: "Estimation with Potential Outcomes and Instrumental Variables"
+author: "Caleb Leedy"
+date: "March 29, 2023"
+output: pdf_document
+---
+
+# Goals
+
+* To understand how to make causal simulation studies,
+* To see algorithms that utilize the potential outcomes framework,
+* To use an instrumental variable to solve the unconfoundedness problem, and
+* To identify weaknesses of existing approaches.
+
+# Generating the Data
+
+```{r setup, warnings=FALSE, messages=FALSE}
+
+library(dplyr)
+library(rlang)
+library(stringr)
+library(tidyr)
+library(purrr)
+library(knitr)
+
+library(doParallel)
+library(doRNG)
+library(parallelly)
+
+library(grf)
+library(AIPW)
+library(DoubleML)
+library(mlr3)
+library(mlr3learners)
+library(ivreg)
+
+expit <- function(x) {1 / (1 + exp(-x))}
+
+```
+
+## Data Generating Models
+
+With Unconfoundedness
+
+* Linear outcome, linear response
+* Nonlinear outcome, linear response
+* Linear outcome, nonlinear response
+* Nonlinear outcome, nonlinear response 
+
+Without Unconfoundedness
+
+* Same as above with strong instruments
+* With weak instruments
+
+```{r data gen}
+
+#' The create_data function generates different kinds of data for the following
+#' tests.
+#'
+#' @param n An integer for the number of samples
+#' @param outcome_expr A string 
+#' @param response_str A string
+#' @param tau_str A string
+#'
+#' @details outcome_str, response_str, and tau_str can only display
+#' functions of x1, x2, x3, x4, x5, x6, x7, x8, x9, x10.
+create_data <- function(n, outcome_str, response_str, tau_str,
+                        show_pi_quantiles = FALSE) {
+
+  # Steps to generate data:
+  # 1. Generate covariates
+  # 2. Generate potential outcomes
+  # 3. Assign treatment
+  
+  # 1. Generate covariates
+  # All distributions have mean 0, variance 1.
+  x1 <- rnorm(n)
+  x2 <- rnorm(n)
+  x3 <- rnorm(n)
+  x4 <- runif(n, -1, 1) / sqrt(1 / 3)
+  x5 <- (rchisq(n, df = 1) - 1) / sqrt(2)
+  x6 <- (rchisq(n, df = 3) - 3) / sqrt(6)
+  x7 <- (rchisq(n, df = 10) - 10)  / sqrt(20)
+  x8 <- (2 * rbinom(n, 1, prob = 0.5) - 1) 
+  x9 <- rpois(n, 1) - 1
+  x10 <- (rpois(n, 5) - 5) / sqrt(5)
+
+  # 2. Generate potential outcomes
+  # NOTE: We are assuming an additive treatment effect.
+  # NOTE: We also have normal noise in our potential outcomes.
+  tau_vec <- eval(rlang::parse_expr(tau_str))
+  out_vec <- eval(rlang::parse_expr(outcome_str))
+  y0_vec <- out_vec + rnorm(n)
+  y1_vec <- tau_vec + out_vec + rnorm(n)
+
+  # 3. Assign treatments
+  # NOTE: Since response_str is user determined, we do not assume MCAR, MAR, or
+  # NMAR a priori.
+  pi_vec <- expit(eval(rlang::parse_expr(response_str)))
+  a_vec <- rbinom(n, 1, pi_vec)
+
+  if (show_pi_quantiles) {
+    print(paste0("The 1% quantile of pi_vec is: ",
+                 round(quantile(pi_vec, 0.01), 4)))
+    print(paste0("The 50% quantile of pi_vec is: ",
+                 round(quantile(pi_vec, 0.5), 4)))
+    print(paste0("The 99% quantile of pi_vec is: ", 
+                 round(quantile(pi_vec, 0.99), 4)))
+
+  }
+
+  # From SUTVA: Y = Y(1) * A + Y(0) * (1 - A) 
+  y_obs <- y1_vec * a_vec + y0_vec * (1 - a_vec)
+
+  return(tibble(Y = y_obs,
+                X1 = x1, X2 = x2, X3 = x3, X4 = x4, X5 = x5,
+                X6 = x6, X7 = x7, X8 = x8, X9 = x9, X10 = x10,
+                A = a_vec,
+                pi_vec = pi_vec,
+                tau = tau_vec))
+  
+}
+
+```
+
+# Identifying Causal Effects
+
+* Outcome model
+* Response model
+* AIPW
+
+```{r potential outcomes functions}
+
+outcome_mod <- function(df, mod_str) {
+
+  mod_str <- str_to_upper(mod_str)
+
+  # We fix the model string if the user did not start it with "Y~".
+  if (!str_detect(mod_str, "~")) {
+    mod_str <- str_c("Y ~", mod_str)
+  }
+
+  # OLS models
+  y1_mod <- lm(mod_str, data = dplyr::filter(df, A == 1))
+  y0_mod <- lm(mod_str, data = dplyr::filter(df, A == 0))
+
+  y1_pred <- predict(y1_mod, newdata = df)
+  y0_pred <- predict(y0_mod, newdata = df)
+
+  tau_hat <- mean(y1_pred) - mean(y0_pred)
+
+  # TODO: Add variance
+  # This is a temporary variance that is clearly incorrect.
+  est_var <- -1
+
+  return(list(tau = tau_hat, var = est_var))
+}
+
+response_mod <- function(df, mod_str) {
+
+  mod_str <- str_to_upper(mod_str)
+
+  # We fix the model string if the user did not start it with "A~".
+  if (!str_detect(mod_str, "~")) {
+    mod_str <- str_c("A ~", mod_str)
+  }
+
+  # Logistic Model
+  pi_mod <- glm(mod_str, data = df, family = binomial(link = logit))
+  pi_hat <- pi_mod$fitted.values
+
+  tau_hat <- mean(df$Y * df$A / pi_hat) - mean(df$Y * (1 - df$A) / (1 - pi_hat))
+  
+  # TODO: Add variance
+  # This is a temporary variance that is clearly incorrect.
+  est_var <- -1
+
+  return(list(tau = tau_hat, var = est_var))
+}
+
+custom_aipw <- function(df, out_mod_str, resp_mod_str) {
+
+  # Outcome Model Estimation
+  out_mod_str <- str_to_upper(out_mod_str)
+
+  # We fix the model string if the user did not start it with "Y~".
+  if (!str_detect(out_mod_str, "~")) {
+    out_mod_str <- str_c("Y ~", out_mod_str)
+  }
+
+  # OLS models
+  y1_mod <- lm(out_mod_str, data = dplyr::filter(df, A == 1))
+  y0_mod <- lm(out_mod_str, data = dplyr::filter(df, A == 0))
+
+  y1_pred <- predict(y1_mod, newdata = df)
+  y0_pred <- predict(y0_mod, newdata = df)
+
+  # Response Model Estimation
+  resp_mod_str <- str_to_upper(resp_mod_str)
+
+  # We fix the model string if the user did not start it with "A~".
+  if (!str_detect(resp_mod_str, "~")) {
+    resp_mod_str <- str_c("A ~", resp_mod_str)
+  }
+
+  # Logistic Model
+  pi_mod <- glm(resp_mod_str, data = df, family = binomial(link = logit))
+  pi_hat <- pi_mod$fitted.values
+
+  # Combine for AIPW
+  mu1_est <- mean(y1_pred + df$A / pi_hat * (df$Y - y1_pred))
+  mu0_est <- mean(y0_pred + (1 - df$A) / (1 - pi_hat) * (df$Y - y0_pred))
+
+  tau_hat <- mu1_est - mu0_est
+
+  # TODO: Add variance
+  # This is a temporary variance that is clearly incorrect.
+  est_var <- -1
+
+  return(list(tau = tau_hat, var = est_var))
+}
+
+```
+
+```{r mcmc potential outcomes, warnings=FALSE, messages=FALSE}
+
+clust <- makeCluster(availableCores() - 2)
+registerDoParallel(clust)
+
+B <- 1000
+
+mcmc_res <- 
+  foreach(iter = 1:B, .packages = c("stringr", "dplyr")) %dorng% {
+
+    if (iter %% 100 == 0) {
+      print(paste0("Iter: ", iter))
+    }
+
+    # Parameters
+    true_tau <- 2
+    n_obs <- 1000
+
+    # These are true values
+    y_mod_str <- "3 + x1 - 0.5 * x2 + 1.2 * x3"
+    response_model <- "x1 + 1.2 * x2"
+
+    # These are functional forms of estimated models
+    # Use formula notation.
+    out_mod_form <- "x1 + x2 + x3"
+    resp_mod_form <- "x1 + x2"
+
+    # Run models
+    df <- create_data(n = n_obs, 
+                      outcome_str = y_mod_str,
+                      response_str = response_model,
+                      tau_str = as.character(true_tau))
+
+    out_res <- outcome_mod(df, mod_str = out_mod_form)   # Correctly specified
+    res_res <- response_mod(df, mod_str = resp_mod_form) # Correctly specified
+    cust_aipw_res <- 
+      custom_aipw(df,
+                  out_mod_str = out_mod_form,            # Correctly specified
+                  resp_mod_str = resp_mod_form)          # Correctly specified
+
+    x_mat <- 
+      model.matrix(as.formula(paste0("~", str_to_upper(out_mod_form))),
+                   data = df)
+    cf_mod <- causal_forest(X = x_mat, Y = df$Y, W = df$A)
+    cf_res <- average_treatment_effect(cf_mod, target.sample = "all")
+
+    tibble(true = true_tau,
+           out = out_res$tau,
+           resp = res_res$tau,
+           aipw = cust_aipw_res$tau,
+           cf = cf_res[1])
+
+  } %>% bind_rows()
+
+stopCluster(clust)
+
+```
+
+```{r test results potential outcomes}
+
+# NOTE: The t-test only works for a constant tau.
+mcmc_res %>%
+  summarize(
+    mean_out = mean(out),
+    mean_resp = mean(resp),
+    mean_aipw = mean(aipw),
+    mean_cf = mean(cf),
+    var_out = var(out),
+    var_resp = var(resp),
+    var_aipw = var(aipw),
+    var_cf = var(cf),
+    tstat_out = (mean(out) - mean(true)) / (sqrt(var(out) / nrow(mcmc_res))),
+    tstat_resp = (mean(resp) - mean(true)) / (sqrt(var(resp) / nrow(mcmc_res))),
+    tstat_cf = (mean(cf) - mean(true)) / (sqrt(var(cf) / nrow(mcmc_res))),
+    tstat_aipw = (mean(aipw) - mean(true)) / (sqrt(var(aipw) / nrow(mcmc_res)))
+  ) %>%
+  pivot_longer(cols = everything(),
+               names_to = c(".value", "algorithm"),
+               names_pattern = "(.*)_(.*)") %>%
+  mutate(pval = ifelse(tstat < 0,
+                       pt(tstat, df = nrow(mcmc_res)),
+                       pt(-tstat, df = nrow(mcmc_res)))) %>%
+  knitr::kable(digits = 3)
+
+```
+
+# Instrumental Variables
+
+* 2SLS
+* Non cross fit
+* Cross-fit
+
+```{r iv generate data}
+
+create_iv <- function(n, outcome_str, response_str, tau_str,
+                      always_frac = 0,
+                      never_frac = 0.2,
+                      show_pi_quantiles = FALSE) {
+
+  # Steps to generate data:
+  # 1. Generate covariates
+  # 2. Generate potential outcomes
+  # 3. Assign treatment
+  # 4. Strata individual by group type (compliers, always/never takers)
+  
+  # 1. Generate covariates
+  # All distributions have mean 0, variance 1.
+  x1 <- rnorm(n)
+  x2 <- rnorm(n)
+  x3 <- rnorm(n)
+  x4 <- runif(n, -1, 1) / sqrt(1 / 3)
+  x5 <- (rchisq(n, df = 1) - 1) / sqrt(2)
+  x6 <- (rchisq(n, df = 3) - 3) / sqrt(6)
+  x7 <- (rchisq(n, df = 10) - 10)  / sqrt(20)
+  x8 <- (2 * rbinom(n, 1, prob = 0.5) - 1) 
+  x9 <- rpois(n, 1) - 1
+  x10 <- (rpois(n, 5) - 5) / sqrt(5)
+
+  # 2. Generate potential outcomes
+  # NOTE: We are assuming an additive treatment effect.
+  # NOTE: We also have normal noise in our potential outcomes.
+  tau_vec <- eval(rlang::parse_expr(tau_str))
+  out_vec <- eval(rlang::parse_expr(outcome_str))
+  y0_vec <- out_vec + rnorm(n)
+  y1_vec <- tau_vec + out_vec + rnorm(n)
+
+  # 3. Assign treatments
+  # NOTE: Since response_str is user determined, we do not assume MCAR, MAR, or
+  # NMAR a priori.
+  pi_vec <- expit(eval(rlang::parse_expr(response_str)))
+  a_vec <- rbinom(n, 1, pi_vec)
+
+  if (show_pi_quantiles) {
+    print(paste0("The 1% quantile of pi_vec is: ",
+                 round(quantile(pi_vec, 0.01), 4)))
+    print(paste0("The 50% quantile of pi_vec is: ",
+                 round(quantile(pi_vec, 0.5), 4)))
+    print(paste0("The 99% quantile of pi_vec is: ", 
+                 round(quantile(pi_vec, 0.99), 4)))
+
+  }
+
+  # From SUTVA: Y = Y(1) * A + Y(0) * (1 - A) 
+  y_obs <- y1_vec * a_vec + y0_vec * (1 - a_vec)
+
+  res_df <- tibble(Y = y_obs,
+                   Y0 = y0_vec,
+                   Y1 = y1_vec,
+                   X1 = x1, X2 = x2, X3 = x3, X4 = x4, X5 = x5,
+                   X6 = x6, X7 = x7, X8 = x8, X9 = x9, X10 = x10,
+                   A = a_vec,
+                   pi_vec = pi_vec,
+                   tau = tau_vec)
+
+  # 4. Group based on strata
+  complier_frac <- 1 - always_frac - never_frac
+  group_cuts <- cumsum(c(complier_frac, always_frac, never_frac))
+  group_id <- runif(n)
+
+  # Compliers = 0, Always takers = 1, Never takers = 2
+  group_id <- purrr::map_dbl(group_id, function(x) {sum(x > group_cuts)}) 
+
+  res_df %>%
+    mutate(group_id = group_id) %>%
+    mutate(Y = case_when(group_id == 0 ~ Y,
+                         group_id == 1 ~ Y1,
+                         group_id == 2 ~ Y0)) %>%
+    mutate(obs_treat = ifelse(group_id == 0, A, 
+                              ifelse(group_id == 1, 1, 0)))
+
+}
+
+# In this simulation the instrument is A, but we also observe obs_treat.
+
+```
+
+```{r est iv ate}
+
+true_tau = 2
+df <- create_iv(n = 1000,
+                outcome_str = y_mod_str,
+                response_str = response_model,
+                tau_str = as.character(true_tau))
+
+ivreg(Y ~ X1 + X2 + X3 | obs_treat | A, data = df)
+
+
+
+```
+
+# Local Average Treatment Effects
