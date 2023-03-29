@@ -32,14 +32,16 @@ To contribute to this repository, see [Contributing.md](Contributing.md).
 
 # Resources
 
+* [Online Causal Inference Seminar](https://sites.google.com/view/ocis/home)
+  for new research in the field
+* [CRAN Task View: Causal
+  Inference](https://cran.r-project.org/web/views/CausalInference.html) for R
+  packages related to causal inference.
+* Stefan Wager's [Causal Inference Class
+  Notes](https://web.stanford.edu/~swager/stats361.pdf)
 * [Ruocheng Guo's awesome-causality-data
   repository](https://github.com/rguo12/awesome-causality-data) for open source
   data sets useful to causal inference.
 * [Ruocheng Guo's
   awesome-causality-algorithms](https://github.com/rguo12/awesome-causality-algorithms)
   for open source code from causal inference papers.
-* [Online Causal Inference Seminar](https://sites.google.com/view/ocis/home)
-  for new research in the field
-* [CRAN Task View: Causal
-  Inference](https://cran.r-project.org/web/views/CausalInference.html) for R
-  packages related to causal inference.

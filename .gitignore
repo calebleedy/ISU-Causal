@@ -2,3 +2,4 @@ TODO.md
 Presentations/*
 !Presentations/*.tex
 !Presentations/*.pdf
+!Presentations/*.bib
