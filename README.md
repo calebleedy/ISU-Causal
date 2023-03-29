@@ -6,13 +6,13 @@ Welcome to the ISU Causal Inference Working Group! We meet Wednesdays from
 contains resources for what we have and intend to study. The current schedule
 is:
 
-| Date     | Presenter(s)                | Topic                                                                                                            | Links |
-| -----    | ----------                  | ------                                                                                                           | ----  |
+| Date     | Presenter(s)                | Topic                                                                                                                              | Links |
+| -----    | ----------                  | ------                                                                                                                             | ----  |
 | March 22 | Hyemin Yeon and Caleb Leedy | [Welcome](Presentations/welcome_032223.pdf) and [Background: Potential Outcomes](Presentations/intro_032223.pdf) |       |
-| March 29 | Caleb Leedy                 | Instrumental Variables and Estimating ATEs                                                                       |       |
-| April 5  | Yumou Qiu                   | Covariate Balancing                                                                                              |       |
-| April 12 | Hyemin Yeon                 | Causal Effects Curve                                                                                             |       |
-| April 19 | Yuyang Li                   | Optimal Covariate Balancing                                                                                      |       |
+| March 29 | Caleb Leedy                 | [Instrumental Variables](Presentations/iv.pdf)                                                                                     |       |
+| April 5  | Yumou Qiu                   | Covariate Balancing                                                                                                                |       |
+| April 12 | Hyemin Yeon                 | Causal Effects Curve                                                                                                               |       |
+| April 19 | Yuyang Li                   | Optimal Covariate Balancing                                                                                                        |       |
 
 
 **Please fill out our [survey](https://forms.gle/Bc3gPvWuRnTWU2gy5)**

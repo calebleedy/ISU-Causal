@@ -70,6 +70,18 @@
 \setbeamercolor{block title}{bg=red!50,fg=black}
 \frame{\titlepage}
 
+\begin{frame}{Outline}
+
+{\setbeamercovered{transparent}
+
+\begin{itemize}
+    \item<1> Overview of Intrumental Variables
+    \item<0> Instrumental Variables in Causal Inference
+\end{itemize}
+}
+
+\end{frame}
+
 \begin{frame}{Ordinary Least Squares}
 
 \begin{itemize}
@@ -217,11 +229,21 @@ Under regularity conditions, 2SLS is
 
   \begin{itemize}
     \item<2-> Bias
-    \item<3-> Weak instruments: In the linear model,
-      \[\plim \hat \beta_3 = \beta_3 + \frac{\Cov(z_1, \varepsilon)}{\Cov(z_1,
-      x_3)}.\]
+    \item<3-> Weak instruments
   \end{itemize}
   
+\end{frame}
+
+\begin{frame}{Outline}
+
+{\setbeamercovered{transparent}
+
+\begin{itemize}
+    \item<0> Overview of Intrumental Variables
+    \item<1> Instrumental Variables in Causal Inference
+\end{itemize}
+}
+
 \end{frame}
 
 \begin{frame}{Causal Models with No Unconfoundedness}
@@ -230,13 +252,13 @@ Under regularity conditions, 2SLS is
     \item Suppose that we have the model,\footnote{The rest of the slides were
       based off of Stefan Wager's S361 Causal Inference Notes
       (\cite{wager2020stats}).}
-      \[Y_i(a) = Y_i(0) + \tau a_i.\]
+      \[Y_i(a) = Y_i(0) + \tau A_i.\]
       % This uses SUTVA assumption to express the observation as a function of
       % potential outcomes.
       We can also express this as 
       \[Y_i = \alpha + A_i \tau + \varepsilon_i\]
     \item We do \textit{not} use the NUC. So 
-      \[Y(1), Y(0) \perp A \mid X.\]
+      \[Y(1), Y(0) \not\perp A \mid X.\]
     \item Notice that OLS does not work because
       \[\tau_{OLS} = \frac{\Cov(Y_i, A_i)}{\Var{A_i}} = 
       \frac{\Cov(\tau A_i + \varepsilon, A_i)}{\Var{A_i}} =
