@@ -278,7 +278,7 @@ use.
 
 ```{r mcmc potential outcomes, warnings=FALSE, messages=FALSE}
 
-clust <- makeCluster(availableCores() - 2)
+clust <- makeCluster(min(availableCores() - 2, 100), outfile = "")
 registerDoParallel(clust)
 
 B <- 1000
