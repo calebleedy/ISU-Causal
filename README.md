@@ -6,13 +6,13 @@ Welcome to the ISU Causal Inference Working Group! We meet Wednesdays from
 contains resources for what we have and intend to study. The current schedule
 is:
 
-| Date     | Presenter(s)                | Topic                                                                                                                              | Links                                                                       |
-| -----    | ----------                  | ------                                                                                                                             | ----                                                                        |
-| 3 / 22   | Hyemin Yeon and Caleb Leedy | [Welcome](Presentations/welcome_032223.pdf) and [Potential Outcomes](Presentations/intro_032223.pdf)                         |                                                                             |
-| 3 / 29   | Caleb Leedy                 | [Instrumental Variables](Presentations/iv.pdf)                                                                                     | Code: [Rmd](Simulations/est_ate_iv.Rmd) / [PDF](Simulations/est_ate_iv.pdf) |
-| 4 / 5    | Yumou Qiu                   | Covariate Balancing                                                                                                                                                               |                                                                             |
-| 4 / 12   | Hyemin Yeon                 | Causal Effects Curve                                                                                                                                                                                                                                             |                                                                             |
-| 4 / 19   | Yuyang Li                   | Optimal Covariate Balancing                                                                                                                                                                                                                                      |                                                                             |
+| Date       | Presenter(s)                | Topic                                                                                                | Links                                                                       |
+| -----      | ----------                  | ------                                                                                               | ----                                                                        |
+| March 22 | Hyemin Yeon and Caleb Leedy | [Welcome](Presentations/welcome_032223.pdf) and [Potential Outcomes](Presentations/intro_032223.pdf) |                                                                             |
+| March 29 | Caleb Leedy                 | [Instrumental Variables](Presentations/iv.pdf)                                                       | Code: [Rmd](Simulations/est_ate_iv.Rmd) / [PDF](Simulations/est_ate_iv.pdf) |
+| April 5  | Yumou Qiu                   | Covariate Balancing                                                                                  |                                                                             |
+| April 12 | Hyemin Yeon                 | [Continuous Treatment Effects](Presentations/CIWG_20230412_HyeminYeon_ContTrt.pdf)                   |                                                                             |
+| April 19 | Yuyang Li                   | Optimal Covariate Balancing                                                                          |                                                                             |
 
 
 **Please fill out our [survey](https://forms.gle/Bc3gPvWuRnTWU2gy5)**
