@@ -13,6 +13,8 @@ is:
 | April 5  | Yumou Qiu                   | Covariate Balancing                                                                                  |                                                                             |
 | April 12 | Hyemin Yeon                 | [Continuous Treatment Effects](Presentations/CIWG_20230412_HyeminYeon_ContTrt.pdf)                   |                                                                             |
 | April 19 | Yuyang Li                   | Optimal Covariate Balancing                                                                          |                                                                             |
+| April 26 | Yunhui Qi                   | Multiple Treatment Effects                                                                           |                                                                             |
+| May 3    | Jae-Kwang Kim               |                                                                                                      |                                                                             |
 
 
 **Please fill out our [survey](https://forms.gle/Bc3gPvWuRnTWU2gy5)**
