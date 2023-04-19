@@ -26,6 +26,7 @@ is:
 
 
 **Please fill out our [survey](https://forms.gle/Bc3gPvWuRnTWU2gy5)**
+**Please fill out [feedback from the first four weeks](https://forms.gle/VKYz4b6n3YHbk7i76)**
 
 # Folders
 
@@ -49,6 +50,7 @@ To contribute to this repository, see [Contributing.md](Contributing.md).
 * [CRAN Task View: Causal
   Inference](https://cran.r-project.org/web/views/CausalInference.html) for R
   packages related to causal inference.
+* Kosuke Imai's [Youtube Playlist](https://www.youtube.com/@imaikosuke)
 * [Ruocheng Guo's awesome-causality-data
   repository](https://github.com/rguo12/awesome-causality-data) for open source
   data sets useful to causal inference.
