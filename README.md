@@ -19,9 +19,8 @@ is:
 | May 17   | Hyemin Yeon    | [CI with Spatial Confounding](Presentations/CIWG_20230517_HyeminYeon_SpatConfound.pdf)                          | [Paper](https://arxiv.org/abs/2112.14946)                                                                 |
 | May 24   | Moushumi       | [Semiparametric IVs with Optimal Treatment under Endogeneity](Presentations/SemiIV.pdf)                         | [Paper](https://tinyurl.com/549nfn52)                                                                     |
 | May 31   | Zhiling Gu     | [Parameterizing and Simulating from Causal Models](Presentations/ZG_053123.pdf)                                 | [Paper](https://arxiv.org/pdf/2109.03694.pdf)                                                             |
-| June 7   | Jae-Kwang Kim  | Graphical Models                                                                                                |                                                                                                           |
+| June 7   | Hyemin Yeon    | [CI with Functional Data](Presentations/CIWG_20230607_HyeminYeon_FunctionalTrt.pdf)                             |                                                                                                   |
 | June 14  | Rohit Kanrar   |                                                                                                                 |                                                                                                           |
-| June 21  | Hyemin Yeon    | CI with Functional Data                                                                                         |                                                                                                           |
 
 
 **Please fill out our [survey](https://forms.gle/Bc3gPvWuRnTWU2gy5)**
