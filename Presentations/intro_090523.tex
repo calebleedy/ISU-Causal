@@ -1,0 +1,620 @@
+\documentclass[handout]{beamer} %
+\usetheme{CambridgeUS}
+\usepackage[latin1]{inputenc}
+\usefonttheme{professionalfonts}
+\usepackage{times}
+\usepackage{graphics}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{booktabs}
+
+\usepackage[style=authoryear]{biblatex}
+
+\addbibresource{references.bib}
+
+% theorem
+\BeforeBeginEnvironment{theorem}{
+  \setbeamercolor{block title}{fg=red!80!black,bg=gray!10!white}
+  \setbeamercolor{block body}{fg=black,bg=white}
+}
+\AfterEndEnvironment{theorem}{
+    \setbeamercolor{block title}{fg=blocktitlefgsave,bg=blocktitlebgsave}
+    \setbeamercolor{block body}{fg=blockbodyfgsave,bg=blockbodybgsave}
+}
+
+
+% definition
+\BeforeBeginEnvironment{definition}{
+  \setbeamercolor{block title}{fg=red!80!black,bg=gray!10!white}
+  \setbeamercolor{block body}{fg=black, bg=white}
+}
+\AfterEndEnvironment{definition}{
+    \setbeamercolor{block title}{fg=blocktitlefgsave,bg=blocktitlebgsave}
+    \setbeamercolor{block body}{fg=blockbodyfgsave,bg=blockbodybgsave}
+}
+
+\renewcommand{\arraystretch}{1.5}
+
+%\setbeamersize{text margin left=0.3mm,text margin right=0.1mm}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\expit}{expit}
+\DeclareMathOperator*{\Cov}{Cov}
+\DeclareMathOperator*{\Var}{Var}
+\newcommand{\R}{\mathbb{R}}
+
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, filecolor=magenta, urlcolor=blue}
+
+\author[CL]{Caleb Leedy}
+\title[Background]{Introduction to Causal Inference}
+
+\begin{document}
+
+\everymath{\displaystyle}
+\setbeamertemplate{title page}[default][colsep=-4bp,rounded=true]
+\setbeamertemplate{itemize items}[circle]
+\setbeamercolor{block title}{bg=red!50,fg=black}
+\frame{\titlepage}
+
+%\begin{frame}{Why is causal inference important?}
+%
+%\begin{itemize}
+%    \item Often the questions that we ask are important in their respective
+%      disciplines.
+%    \item Causal inference tries to get at \textit{why} something happened.
+%\end{itemize}
+%
+%\end{frame}
+%
+%\begin{frame}{What is causal inference?}
+%
+%\begin{itemize}
+%    \item Causal inference is the study and identification of treatment effects.
+%    \item We want to know how an intervention changed an outcome.
+%\end{itemize}
+%
+%\end{frame}
+
+%\begin{frame}{Association is not enough}
+%
+%% Give framework
+%
+%\end{frame}
+%
+%\begin{frame}{Association is not enough}
+%
+%% Show results
+%
+%\end{frame}
+%
+%\begin{frame}{Problem with associations}
+%
+%\begin{itemize}
+%    \item It does not consider selection bias (dependency in a DAG).
+%\end{itemize}
+%
+%\end{frame}
+
+\begin{frame}{Frameworks for Causal Inference}
+
+{\setbeamercovered{transparent}
+
+\begin{itemize}
+    \item<1-2> Potential Outcomes
+    \item<1> Directed Acyclic Graphs (DAGs)
+\end{itemize}
+}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{center}
+    {\Large Background and Notation}
+\end{center}
+
+\end{frame}
+
+\begin{frame}{Potential Outcomes}
+
+\begin{itemize}
+    \item<1-> Outcome variable $Y$
+    \item<1-> Treatment assignment $A \in \{0, 1\}$
+    \item<1-> Covariates $X$
+    \item<2-> The \textit{potential outcomes} of $Y$ for individual $i$ are
+    \[Y_i(0) \text{ and } Y_i(1).\]
+    % This means the outcome of $Y_i$ if i receives A = 0, and the outcome of
+    % $Y_i$ if $A = 1$.
+    % Notice that the potential outcomes do NOT depend on the treatment
+    % assignment at all.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Potential Outcomes}
+
+\begin{itemize}
+    \item Often the goal is to understand: $Y(1) - Y(0)$.
+    \item<2-> For each individual $i$, we only observe \textit{either} $Y_i(0)$
+    \textit{or} $Y_i(1)$.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Assumptions}
+
+\begin{itemize}
+    \item<2-> Stable unit treatment value assumption (SUTVA): 
+    \[Y_i = Y_i(1) A_i + Y_i(0) (1 - A_i).\]
+    % The key to this assumption is that the responses (potential outcomes) for
+    % one unit are unaffected by other units.
+    % Sometimes referred to as consistency
+    \item<3-> No Unmeasured Confounders (NUC): 
+    \[Y(1), Y(0) \perp A \mid X\]
+    % Ignorability
+    % Exchangability
+    \item<4-> Positivity: For $X$ with $p(X) > 0$,
+    \[0 < \Pr(A = 1 \mid X) < 1.\]
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Goals:}
+
+\begin{itemize}
+    \item Average treatment effect (ATE): 
+    \[E[Y(1) - Y(0)]\]
+    \item Average treatment effect of the treated (ATT): 
+    \[E[Y(1) - Y(0) \mid A = 1]\]
+    \item Conditional average treatment effect (CATE):
+    \[E[Y(1) - Y(0) \mid X]\]
+    \item Individual treatment effect (ITE): 
+    \[Y_i(1) - Y_i(0)\]
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Average Treatment Effect}
+
+\begin{itemize}
+    \item Consider the ATE denoted by 
+    \[\tau = E[Y(1) - Y(0)].\]
+\end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Outcome Model}
+
+\begin{itemize}
+    \item From our assumptions, $E[Y(a)] = E[E[Y \mid X, A = a]]$.
+    \item We can construct a model, $m_a(X) = E[Y \mid X, A = a]$ and estimate
+      $\tau$ using
+    \[\hat \tau_{\text{OR}} = \hat m_1(X) - \hat m_0(X).\]
+    \item If the model for $\hat m_a(X)$ is correctly specified, 
+      $\hat \tau_{\text{OR}}$ is consistent.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Propensity Score}
+
+\begin{itemize}
+    \item Instead of modeling the outcome $E[Y \mid X]$ we can model the 
+    response probability $\pi(X) = \Pr(A = 1 \mid X)$.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Inverse Propensity Score Weighting}
+
+\begin{itemize}
+    \item If $\pi(X)$ is known then we can estimate $\tau$ with 
+    $\hat \tau_{\text{IPW}} = \hat \mu_1 - \hat \mu_0$. 
+    \item We estimate $E[Y(1)]$ with
+    \[\hat \mu_1 = n^{-1} \sum_{i = 1}^n \frac{A_i Y_i}{\pi(X_i)}.\]
+    \item We can estimate $E[Y(0)]$ with
+    \[\hat \mu_0 = n^{-1} \sum_{i = 1}^n \frac{(1 - A_i) Y_i}{1 - \pi(X_i)}.\]
+    \item This is similar to a Horvitz-Thompson estimator.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Result}
+
+\begin{itemize}
+    \item The IPW estimator is consistent.
+    \begin{align*}
+        E\left[\frac{AY}{\pi(X)}\right] 
+        &= E\left[\frac{AY(1)}{\pi(X)}\right] \\
+        &= E\left[E\left[\frac{AY(1)}{\pi(X)} \mid Y(1), X\right]\right] \\
+        &= E\left[Y(1) E\left[\frac{A}{\pi(X)} \mid X\right]\right]\\
+        &= E[Y(1)].
+    \end{align*}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Double Robust Estimation}
+
+\begin{itemize}
+    \item We can combine our outcome model and response model together to get a
+      doubly robust estimator: $\hat \tau_{\text{DR}} = \hat \mu_{1, \text{DR}}
+      - \hat \mu_{0, \text{DR}}$ where
+    \[\hat \mu_{1,\text{DR}} = n^{-1} \sum_{i = 1}^n \left(m_1(x_i) + 
+    \frac{A_i}{\hat \pi(X_i)}(Y_i - m_1(x_i))\right)\]
+    and 
+    \[\hat \mu_{0,\text{DR}} = n^{-1} \sum_{i = 1}^n \left(m_0(x_i) + 
+    \frac{1 - A_i}{1 - \hat \pi(X_i)}(Y_i - m_0(x_i))\right).\]
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Result}
+
+\begin{itemize}
+    \item $\hat \tau_{\text{DR}}$ is consistent if either the outcome or the
+      response model is true.
+    \item If the outcome model is correctly specified ($m_1(x) = E[Y(1) \mid
+      X]$), then
+      {\footnotesize
+    \begin{align*}
+      &E[\hat \mu_{1, \text{DR}}] \\
+    &=  n^{-1} \sum_{i = 1}^n \left(E[m_1(x_i)] + 
+      E\left[E\left[\left(\frac{A_i}{\hat \pi(X_i)}\right) (Y_i(1) - m_1(x_i)) 
+      \mid X \right]\right] \right)\\
+    &=  n^{-1} \sum_{i = 1}^n \left(E[m_1(x_i)] + 
+      E\left[E\left[\left(\frac{A_i}{\hat \pi(X_i)}\right) \mid X\right] 
+      E\left[(Y_i(1) - m_1(x_i))
+      \mid X\right]\right] \right)\\
+    &=  n^{-1} \sum_{i = 1}^n E[m_1(x_i)]\\
+    &=  E[Y(1)].
+    \end{align*}
+    }
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Result}
+
+\begin{itemize}
+    \item If the response model is correctly specified ($\hat \pi(X) = \pi(X)$),
+      then
+    \begin{align*}
+      E&[\hat \mu_{1, \text{DR}}] \\
+    &=  n^{-1} \sum_{i = 1}^n E\left[\left(1 - \frac{A_i}{\pi(X_i)}\right)m_1(x_i) 
+    + \frac{A_i}{\pi(X_i)}Y_i\right]\\
+    &=  n^{-1} \sum_{i = 1}^n E\left[E\left[\left(1 - \frac{A_i}{\pi(X_i)}\right)m_1(x_i) 
+    + \frac{A_i}{\pi(X_i)}Y_i\mid X, Y\right]\right]\\
+    &=  n^{-1} \sum_{i = 1}^n E\left[\left(1 - \frac{\pi(X_i)}{\pi(X_i)}\right)m_1(x_i) 
+    + \frac{\pi(X_i)}{\pi(X_i)}Y_i(1)\right]\\
+    &= E[Y(1)].
+    \end{align*}
+\end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Intrumental Variables (IVs)}
+
+{\setbeamercovered{transparent}
+
+\begin{itemize}
+    \item<1> Overview of Instrumental Variables
+    \item<0> Instrumental Variables in Causal Inference
+\end{itemize}
+}
+
+\end{frame}
+
+\begin{frame}{Ordinary Least Squares}
+
+\begin{itemize}
+    \item<1-> In OLS, we consider the model,
+
+      \begin{equation}\label{eq:ols}
+      Y = X\beta + \varepsilon
+      \end{equation}
+
+      where $E[\varepsilon \mid X] = 0$ and $X \perp \varepsilon$.
+    \item<2-> However, what if $\Cov(X, \varepsilon) \neq 0$?
+    \item<3-> We say a variable $X_k$ is \textbf{endogenous} if $\Cov(X_k,
+      \varepsilon) \neq 0$.
+    \item<3-> A variable $X_k$ is \textbf{exogenous} if $X_k \perp \varepsilon$.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Modifying Previous Assumptions}
+
+\begin{itemize}
+    \item We previous discussed the assumptions of the potential outcomes
+      framework. One of them was: No Unmeasured Confounders (NUC),
+
+      \[Y(1), Y(0) \perp A \mid X.\]
+
+    \item If a variable $X_k$ is endogenous, then the model does \textit{not} 
+      satisfy the NUC condition.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Parametric Models}
+
+\begin{itemize}
+  \item Consider the following linear model:\footnote{Example taken from
+    (\cite{wooldridge2010econometric}).}
+      \[y = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \varepsilon\]
+      with $x_1, x_2 \perp \varepsilon$ but $x_3 \not\perp \varepsilon$
+    \item To estimate $\beta_3$ we need an instrumental variable.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Instrumental Variables}
+
+\begin{itemize}
+  \item A variable $z_1$ is an \textbf{instrumental variable} (IV) if it
+    satisfies:
+    \begin{align}
+      \Cov(z_1, \varepsilon) &= 0 \label{eq:iv1}\\
+      \Cov(z_1, x_3) &\neq 0 \label{eq:iv2}
+    \end{align}
+  \item This makes sense because we want it to be exogenous with respect to
+    Equation~\ref{eq:ols}, yet we need it to influence $x_3$ if we are going to
+    measure $\beta_3$.
+  \item Note, that Equation~\ref{eq:iv1} \textit{cannot} be tested but
+    Equation~\ref{eq:iv2} can and should be tested.
+\end{itemize}
+
+\end{frame}
+
+%\begin{frame}{Graphical Model}
+%
+%  \begin{center}
+%  \begin{tikzpicture}
+%    \node[state] (1) {$Z$};
+%    \node[state] (2) [right =of 1] {$X$};
+%    \node[state] (3) [right =of 2] {$Y$};
+%    \node[state] (4) [above right =of 2,xshift=-0.6cm,yshift=-0.3cm] {$L$};
+%
+%    \path (1) edge node[above] {} (2);
+%    \path (2) edge node[above] {} (3);
+%    \path[dashed] (4) edge node[above] {} (3);
+%    \path[dashed] (4) edge node[above] {} (2);
+%  \end{tikzpicture}
+%  \end{center}
+%
+%\end{frame}
+%
+%\begin{frame}{Graphical Model}
+%
+%  \begin{center}
+%  \begin{tikzpicture}
+%    \node[state] (1) {$Z$};
+%    \node[state] (2) [right =of 1] {$X$};
+%    \node[state] (3) [right =of 2] {$Y$};
+%    \node[state] (4) [above right =of 2,xshift=-0.6cm,yshift=-0.3cm] {$L$};
+%
+%    \path (1) edge node[above] {} (2);
+%    \path (2) edge node[above] {} (3);
+%    \path[dashed] (4) edge node[above] {} (3);
+%    \path[dashed] (4) edge node[above] {} (2);
+%    \path[red,line width=0.5] (1) edge[bend right=30] (3);
+%  \end{tikzpicture}
+%  \end{center}
+%
+%\end{frame}
+
+\begin{frame}{Reduced Form Equations}
+
+\begin{itemize}
+    \item When we have an instrument $z_1$, we can estimate:
+      \begin{align*}
+        \hat x_3 &= \hat \gamma_0 + \hat \gamma_1 x_1 + \hat \gamma_2 x_2 
+          + \hat \theta z_1\\
+        \hat y &= \hat \beta_0 + \hat \beta_1 x_1 + \hat \beta_2 x_2 + \hat
+        \beta_3 \hat x_3
+      \end{align*}
+    \item This framework is called \textbf{two-stage least squares} (2SLS).
+    \item This can be generalized to have $K$ exogenous $x_i$ variables and $L$
+      instruments $z_j$.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Identification}
+
+\begin{itemize}
+    \item Then the IV solves the identification problem.
+    \item Let $z = (x_1, x_2, z_1)$.
+    \item Equation~\ref{eq:iv1} implies that $E[z' \varepsilon] = 0$.
+    \item The normal equations for the IV estimator are:
+      \[E[z'x]\beta = E[z'y].\]
+    \item This has a unique solution if $E[z'x]$ has full rank, which happens if
+      Equation~\ref{eq:iv2} is satisfied.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Results for 2SLS}
+
+Under regularity conditions, 2SLS is
+\begin{itemize}
+  \item consistent,
+  \item asymptotically normal, and 
+  \item asymptotically efficient.
+\end{itemize}
+
+  See (\cite{wooldridge2010econometric}), Chapter 5 for these proofs.
+
+\end{frame}
+
+\begin{frame}{Problems with IVs}
+
+  \begin{itemize}
+    \item<2-> Bias
+    \item<3-> Weak instruments
+  \end{itemize}
+  
+\end{frame}
+
+\begin{frame}{Intrumental Variables}
+
+{\setbeamercovered{transparent}
+
+\begin{itemize}
+    \item<0> Overview of Instrumental Variables
+    \item<1> Instrumental Variables in Causal Inference
+\end{itemize}
+}
+
+\end{frame}
+
+\begin{frame}{Causal Models with No Unconfoundedness}
+
+  \begin{itemize}
+    \item Suppose that we have the model,\footnote{The rest of the slides were
+      based off of Stefan Wager's S361 Causal Inference Notes
+      (\cite{wager2020stats}).}
+      \[Y_i(a) = Y_i(0) + \tau A_i.\]
+      % This uses SUTVA assumption to express the observation as a function of
+      % potential outcomes.
+      We can also express this as 
+      \[Y_i = \alpha + A_i \tau + \varepsilon_i\]
+    \item We do \textit{not} use the NUC. So 
+      \[Y(1), Y(0) \not\perp A \mid X.\]
+    \item Notice that OLS does not work because
+      \[\tau_{OLS} = \frac{\Cov(Y_i, A_i)}{\Var{A_i}} = 
+      \frac{\Cov(\tau A_i + \varepsilon, A_i)}{\Var{A_i}} =
+      \tau + 
+      \frac{\Cov(\varepsilon, A_i)}{\Var{A_i}}\]
+  \end{itemize}
+  
+\end{frame}
+
+\begin{frame}{Causal Models with IVs}
+
+  \begin{itemize}
+    \item<1-> We can add an instrument and have something similar to 2SLS,
+
+      \begin{align*}
+        Y_i &= \alpha + A_i \tau + \varepsilon_i \\
+        A_i &= Z_i \gamma + \eta_i \qquad \varepsilon_i \perp Z_i.
+      \end{align*}
+    \item<2-> Then
+      \[\Cov(Y_i, Z_i) = \Cov(A_i \tau + \varepsilon_i, Z_i) = \tau \Cov(A_i,
+      Z_i).\]
+    \item<3-> Hence,
+      \[\tau = \frac{\Cov{(Y_i, Z_i)}}{\Cov(A_i, Z_i)}.\]
+  \end{itemize}
+  
+\end{frame}
+
+\begin{frame}{Optimal Instruments}
+
+  \begin{itemize}
+    \item If $Z$ is a $d$-dimensional vector then we have
+      \[\tau = \frac{\Cov{(Y_i, w(Z_i))}}{\Cov(A_i, w(Z_i))}\]
+      where $w: \R^d \to \R$.
+    \item The optimal choice of $w(\cdot)$ that minimizes the variance of
+      $\tau$, is
+      \[w^*(Z) \propto E[A \mid Z].\]
+  \end{itemize}
+  
+\end{frame}
+
+\begin{frame}{Estimation}
+
+  The previous slide suggests the following estimation strategy:
+  \begin{itemize}
+    \item[1.] Estimate $\hat w(\cdot) = E[A \mid Z]$ nonparametrically, and then
+    \item[2.] Estimate the covariances using $\hat w$,
+      \[\hat \tau = 
+      \frac{\hat \Cov{(Y_i, \hat w(Z_i))}}{\hat \Cov(A_i, \hat w(Z_i))}\]
+  \end{itemize}
+
+  However, this can fail from overfitting with weak instruments.
+  
+\end{frame}
+
+\begin{frame}{Cross Fitting}
+
+  A better strategy is to use cross-fitting, and solve
+  \[\hat \tau = 
+  \frac{\hat \Cov{(Y_i, \hat w^{k(-i)}(Z_i))}}{
+    \hat \Cov(A_i, \hat w^{k(-i)}(Z_i))}\]
+
+  where $\hat w^{k(-i)}$ is the estimation of $\hat w$ on the $k$-th fold in
+  which element $i$ is missing.
+  
+\end{frame}
+
+\begin{frame}{Extension to Nonparametric Regression}
+
+  \begin{itemize}
+    \item Suppose we have the model:
+      \[Y_i = g(A_i) + \varepsilon_i, \quad Z_i \perp \varepsilon_i\]
+    \item Then,
+      \[E[Y_i \mid Z_i] = \int g(a) f(a \mid z) da.\]
+    \item This can be estimated using basis splines (or other nonparametric
+      techniques).
+  \end{itemize}
+  
+\end{frame}
+
+%\begin{frame}{Local Average Treatment Effects}
+%
+%  \begin{itemize}
+%    \item Consider the model:
+%
+%    \begin{align*}
+%      Y_i &= \alpha + \tau A_i + \varepsilon_i \\
+%      A_i &= \gamma Z_i + \eta_i \quad Z_i \perp \varepsilon_i.
+%    \end{align*}
+%
+%    \item Then we can identify $\tau$ with
+%
+%      \begin{align*}
+%        \tau &= \frac{\Cov(Y_i, Z_i)}{\Cov(A_i, Z_i)} \\
+%        &= \frac{E[Y_i \mid Z_i = 1] - E[Y_i \mid Z_i = 0]}{
+%          E[A_i \mid Z_i = 1] - E[A_i \mid Z_i = 0]}
+%      \end{align*}
+%
+%      where the second equation holds because $Z_i$ is binary.
+%  \end{itemize}
+%  
+%\end{frame}
+%
+%\begin{frame}{Strata}
+%
+%  \begin{center}
+%    \begin{tabular}{rcc}
+%      \toprule
+%        & $A_i(1) = 1$ & $A_i(1) = 0$ \\
+%      \midrule
+%      $A_i(0) = 1$ & Always taker & Denier \\
+%      $A_i(0) = 0$ & Complier     & Never taker\\
+%      \bottomrule
+%    \end{tabular}
+%  \end{center}
+%  
+%\end{frame}
+%
+%\begin{frame}{Result}
+%
+%  \begin{itemize}
+%    \item Assuming that there exist some compliers, the \textbf{local average
+%      treatment effect} is
+%      \[\tau_{LATE} = E[Y_i(1) - Y_i(0) \mid i \text{ is a complier}].\]
+%  \end{itemize}
+%  
+%\end{frame}
+
+\begin{frame}[allowframebreaks]{References}
+
+  \printbibliography
+  
+\end{frame}
+
+\end{document}

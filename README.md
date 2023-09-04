@@ -8,7 +8,7 @@ is:
 
 | Date | Presenter(s) | Topic | Links |
 | ----- | ----------  | ------| ----  |
-| September 5 | Caleb Leedy | Welcome and Introduction | |
+| September 5 | Caleb Leedy | [Welcome](Presentations/welcome_032223.pdf) and [Introduction](Presentations/intro_090523.pdf) | |
 | September 12 |            |                          | |
 | September 12 |            |                          | |
 | September 19 |            |                          | |
