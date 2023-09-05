@@ -26,6 +26,9 @@ is:
 | December 12  |            |                          | |
 
 Last semester's schedule is [here](/S2023_README.md).
+
+# Video Link
+We meet via [WebEx](https://iastate.webex.com/iastate/j.php?MTID=m4c60f9b2f3868d100db942688f208eed).
 # Folders
 
 This repository contains folders with the following information:
