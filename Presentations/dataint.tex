@@ -1,0 +1,488 @@
+\documentclass[handout]{beamer} %
+\usetheme{CambridgeUS}
+\usepackage[latin1]{inputenc}
+\usefonttheme{professionalfonts}
+\usepackage{times}
+\usepackage{graphics}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{booktabs}
+
+\usepackage[style=authoryear]{biblatex}
+
+\addbibresource{~/Documents/grad_school/Research/references.bib}
+
+% theorem
+\BeforeBeginEnvironment{theorem}{
+  \setbeamercolor{block title}{fg=red!80!black,bg=gray!10!white}
+  \setbeamercolor{block body}{fg=black,bg=white}
+}
+\AfterEndEnvironment{theorem}{
+    \setbeamercolor{block title}{fg=blocktitlefgsave,bg=blocktitlebgsave}
+    \setbeamercolor{block body}{fg=blockbodyfgsave,bg=blockbodybgsave}
+}
+
+
+% definition
+\BeforeBeginEnvironment{definition}{
+  \setbeamercolor{block title}{fg=red!80!black,bg=gray!10!white}
+  \setbeamercolor{block body}{fg=black, bg=white}
+}
+\AfterEndEnvironment{definition}{
+    \setbeamercolor{block title}{fg=blocktitlefgsave,bg=blocktitlebgsave}
+    \setbeamercolor{block body}{fg=blockbodyfgsave,bg=blockbodybgsave}
+}
+
+\renewcommand{\arraystretch}{1.5}
+
+%\setbeamersize{text margin left=0.3mm,text margin right=0.1mm}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\expit}{expit}
+\DeclareMathOperator*{\Cov}{Cov}
+\DeclareMathOperator*{\Var}{Var}
+\newcommand{\R}{\mathbb{R}}
+
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, filecolor=magenta, urlcolor=blue}
+
+\author{Xu Shi, Ziyang Pan, Wang Miao}
+\title{Data Integration in Causal Inference}
+
+\begin{document}
+
+\everymath{\displaystyle}
+\setbeamertemplate{title page}[default][colsep=-4bp,rounded=true]
+\setbeamertemplate{itemize items}[circle]
+\setbeamercolor{block title}{bg=red!50,fg=black}
+\frame{\titlepage}
+
+% Review assumptions?
+% Problem of identifiablity
+% Problem of confounding bias / internal validity
+% Problem of selection bias / external validity
+% Problem of collider stratification bias
+%
+% Goals: generalizability, transportability
+%
+% Overview of Estimators
+% Problems to Study
+%   - Explore one particular example
+
+\begin{frame}{Questions for Discussion}
+
+\begin{itemize}
+    \item What are some examples of causal inference that required data 
+      integration?
+    \item Summarize the general ideas of the paper.
+    \item What is confusing about this paper?
+    \item What are the strengths of the paper?
+    \item What are the paper's limitations?
+    \item What are potential future directions for research?
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Why did I choose this paper?}
+
+\begin{itemize}
+  \item Review of introductory material from last week
+  \item Contains lots of good references
+  \item I think that the topic of data integration is interesting
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Who are these people?}
+
+  \begin{itemize}
+    \item Xu Shi - Michigan Biostats
+    \item Ziyang Pan - Michigan Biostats (Graduate Student)
+    \item Wang Miao - Peking University
+    \item Xu Shi and Wang Miao overlapped at Harvard around 2018.
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Summary}
+
+This is a literature review.
+
+\begin{itemize}
+  \item[1.] Overview of Necessary Assumptions
+  \item[2.] Overview of Basic Estimators (OR, IPW, AIPW)
+  \item[3.] Problems to Study:
+    \begin{itemize}
+      \item Combine RCT with External Data
+      \item Correct Observational Study Results
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Notation}
+
+  \begin{itemize}
+    \item $A$ is a (binary) treatment (Takes values $\{0, 1\}$)
+    \item $Y$ is the observed outcome
+    \item $Y(a)$ is the potential outcome of an observation under 
+      treatment $A = a$.
+    \item $X$ is a vector of covariates
+    \item $S$ denotes the study sample
+    \item $S = 1$ indicates that an observation is in the sample; 
+      $S = 0$ means that an observation is NOT in the sample.
+    \item For the $S = 0$ sample, we will sometimes use $D = 1$ as a 
+      missingness indicator to say if an observation has observed 
+      covariates $X$.
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Notation}
+
+  \begin{itemize}
+    \item The definition of $S$ is unclear to me, but I think that we 
+      should think about $S$ as a finite population in the survey 
+      sampling framework from which we take a random sample $S = 1$.
+    \item In this setup, we want to make inference on the super-population
+      model.
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Recall: CI Assumptions}
+
+\begin{itemize}
+    \item Stable unit treatment value assumption (SUTVA):
+
+      \[Y_i = Y_i(1) A_i + Y_i(0) (1 - A_i).\]
+
+    \item No Unmeasured Confounders (NUC):
+
+      \[Y(1), Y(0) \perp A \mid X.\]
+
+    \item Positivity: For $X$ with $p(X) > 0$,
+
+      \[0 < \Pr(A = 1 \mid X) < 1.\]
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{CI Assumptions}
+
+\begin{itemize}
+    \item Consistency: $Y = Y(a)$ if $A = a$ for $a = 0, 1$
+    \item Treatment Exchangeability: 
+      \[Y(a) \perp A \mid X, S = 1 \text{ for } a = 0, 1.\]
+    \item Treatment Positivity: 
+      \[\Pr(A = a \mid X, S = 1) > 0.\]
+    \item Selection Exchangeability:
+      \[Y(a) \perp S \mid X \text{ for } a = 0, 1.\]
+    \item Selection Positivity: 
+      \[\Pr(S = s \mid X) > 0.\]
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Why do we need all of these assumptions?}
+
+\begin{itemize}
+    \item Identification
+    \item Estimation
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{The Identification Problem}
+
+\begin{itemize}
+    \item We want our analysis to make inference on what we want!
+    \item Asks if we can get an answer to our question given an unlimited 
+      sample size.
+    \item We want inference of $E[Y(a)]$ but we only get to observe $(Y, A = a)$.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{The Identification Problem}
+
+\begin{itemize}
+    \item Using our assumptions, we can see that an estimator (such as the 
+      IPW estimator) is 
+    {\small
+    \begin{align*}
+        E\left[\frac{AY}{e(X)}\right] 
+        &= E\left[\frac{AY(1)}{e(X)}\right] & \text{Consistency}\\
+        &= E\left[E\left[\frac{AY(1)}{e(X)} \mid Y(1), X\right]\right] &
+        \text{Law of Iterated Expectations}\\
+        &= E\left[Y(1) E\left[\frac{A}{e(X)} \mid X\right]\right]&
+        \text{Treatment Exchangeability}\\
+        &= E[Y(1)]. & \text{Treatment Positivity}
+    \end{align*}
+    }
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Confounding Bias (Internal Validity)}
+
+\begin{itemize}
+  \item $E[Y(a) \mid A = a, S = 1] \neq E[Y(a) \mid A = a', S = 1]$.
+  \item Example: In a study of learning outcomes, wealthier families are more 
+    likely to get into the treatment arm.
+  \item This violates the assumption: Treatment Exchangeability
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Selection Bias (External Validity)}
+
+\begin{itemize}
+  \item $E[Y(a) \mid S = 1] \neq E[Y(a) \mid S = 0]$.
+  \item Example: There is a study on the effect of a drug on sleep habits. The 
+    sample consists of college students who have different sleep patterns than 
+    the general population.
+  \item This violate the assumption: Selection Exchangeability
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+
+  \begin{center}
+    \includegraphics[width = 0.9 \textwidth]{gentrans.png}
+  \end{center}
+
+\end{frame}
+
+\begin{frame}{Goals of Data Integration}
+
+\begin{itemize}
+    \item Generalizability
+    \item Transportability
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Generalizability}
+
+\begin{itemize}
+    \item Extending causal knowledge from a study to a target population when
+      the study population is a subset of the target population.
+    \item Example: Generalizing results from a particular state to the nation.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Transportability}
+
+\begin{itemize}
+    \item Extending causal knowledge from a study to a target population when
+      the study population is (at least partly) external to the target
+      population.
+    \item Example: Generalizing from one country to another.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Comment}
+
+  \begin{itemize}
+    \item Both of these techniques are a form of extrapolation!
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Goals for Causal Inference}
+
+\begin{itemize}
+    \item Average Treatment Effect (ATE)
+      \[\tau = E[Y(1) - Y(0)].\]
+    \item Average Treatment Effect in the Sample
+      \[\tau_1 = E[Y(1) - Y(0) \mid S = 1].\]
+    \item Average Treatment Effect Not in the Sample
+      \[\tau_0 = E[Y(1) - Y(0) \mid S = 0].\]
+      % We get ATE_1. We want either ATE or ATE_0.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Common Estimators}
+
+\begin{itemize}
+    \item Outcome Regression
+    \item Inverse Probability Weighting
+    \item Augmented Inverse Probability Weighting
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Outcome Regression}
+
+\begin{itemize}
+  \item Use a regression function $m_a(x) = E[Y \mid A = a, X = x, S = 1]$
+    for the analysis where this is estimated on the data for $S = 1$.
+  \item The estimator is then
+
+    \[\hat \theta_{OR} = n^{-1} \sum_{i = 1} \hat m_a(x_i).\]
+
+  \item In the case where unsampled observations still have known covariates,
+    this estimator is $E[m_a(X)]$ for $\tau$ and $E[m_a(X) \mid S = 0]$ for 
+    $\tau_0$.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Proof}
+
+\begin{itemize}
+  \item For the case of estimating $E[m_a(X)]$, note that by the Law of 
+    Iterated Expectations,
+
+    \[E[m_a(X)] = E[E[Y \mid A, X, S]] = E[E[Y(a) \mid A, X, S]] = E[Y(a)].\]
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Inverse Probability Weighting}
+
+\begin{itemize}
+    \item Using a design-consistent approach, we can use an estimator
+      \[\hat \theta_{IPW} = n^{-1} \sum_{i = 1}^n 
+      \frac{I(S_i = 1, A_i = a)Y_i}{\hat \Pr(A = a \mid S = 1, X_i)}.\]
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Examples}
+
+\begin{itemize}
+    \item Correcting Bias in a Randomized Control Trial (RCT)
+    \item Combining Clinical Trials with External Data
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Correcting Bias in RCT}
+
+\begin{itemize}
+    \item The problem with a RCT is that the sample population might not be 
+      representative of the target population.
+    \item Furthermore, we might be able to improve the efficiency of the 
+      estimator by including additional data.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Approach of Yang and Ding (2020)}
+
+\begin{itemize}
+    \item Observe a large data set with $(Y, A, X, S = 0)$.
+    \item Observe a small (validation) data set with $(Y, A, X, U, S = 1)$.
+    \item $U$ is the set of confounders.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Approach of Yang and Ding (2020)}
+
+\begin{itemize}
+    \item Their approach is to estimate $\tau$ with $\hat \tau_1$ and then 
+      by taking the difference between $\hat \tau_{0, ep} - \hat \tau_{1, ep}$
+      where $\hat \tau_{ep}$ is some estimator of $\tau$ that does not include 
+      the unconfounding covariates.
+    \item Then they combine these estimators using a normality assumption to 
+      find the optimal.
+    \item This procedure is equivalent to using a calibration estimator in 
+      survey sampling where the calibration is from the error prone estimator 
+      $\hat \tau$.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Further Research Topics}
+
+\begin{itemize}
+    \item What do we do if the validation sample does not have information on
+      confounding variables $U$?
+    \item How can we extend this to three datasets: the RCT that has valid 
+      internal validity, an external data set that is a valid sample of the 
+      target population, and another large data set that can assist in reducing 
+      the variance of the combined estimator?
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Combining Clinical Trial with External Data}
+
+\begin{itemize}
+    \item The problem with data from a (small) clinical trial is that it may 
+      not be representative of the intended target population.
+    \item With additional information the efficiency of the estimator may be
+      improved.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Approach of Li, Miao, Lu, Zhou (2020)}
+
+\begin{itemize}
+  \item Modified Assumption: Mean Exchangeability. 
+    $E[Y \mid X, S = 0] = E[Y \mid X, S = 1]$. 
+  \item This is a weaker version of Selection Exchangeability.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Approach of Li, Miao, Lu, Zhou (2020)}
+
+{\footnotesize
+\begin{itemize}
+    \item Estimator is 
+
+      \[\hat \tau = \frac{1}{n_1} \sum_{i = 1}^n \left\{
+        S_i(m_1(X_i, \hat \beta_1) - m_0(X_i, \hat \beta_0)) 
+        + \frac{S_i A_i}{e(X_i, \hat \phi)}\hat R_1 -
+      \hat W(X_i, S_i, A_i) \hat R_0\right\}\]
+
+      where 
+
+      \begin{align*}
+      \hat W(X, S, A) &= 
+      \frac{(S(1 - A) + (1 - S)r(X;\hat \eta))\pi(X_i, \hat \alpha)}{
+      \pi(X_i, \hat \alpha)(1 - e(X_i, \hat \phi)) + 
+      (1 - \pi(X_i, \hat \alpha))r(X; \hat \eta)}\\
+      \hat R_t &= Y - m_t(X, \hat \beta_t)\\
+      \end{align*}
+    \item $r(X; \hat \eta)$ is an estimate of the variance ratio between
+      the two data sets.
+    \item $\pi(X, \alpha)$ is the selection propensity score
+    \item $e(X, \phi)$ is the treatment propensity score
+\end{itemize}
+}
+
+\end{frame}
+
+%\begin{frame}{Title}
+%
+%\begin{itemize}
+%    \item 
+%\end{itemize}
+%
+%\end{frame}
+
+\begin{frame}{References}
+
+  \nocite{shi2023data}
+  \nocite{degtiar2023review}
+  \nocite{yang2019combining}
+  \nocite{li2023improving}
+  \printbibliography
+
+\end{frame}
+
+\end{document}
