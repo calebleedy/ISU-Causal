@@ -9,20 +9,19 @@ is:
 | Date | Presenter(s) | Topic | Links |
 | ----- | ----------  | ------| ----  |
 | September 5 | Caleb Leedy | [Welcome](Presentations/welcome_032223.pdf) and [Introduction](Presentations/intro_090523.pdf) | |
-| September 12 | Caleb Leedy | [Data Integration in Causal Inference](Presentations/dataint.pdf) | [Paper](https://wires.onlinelibrary.wiley.com/doi/pdfdirect/10.1002/wics.1581) / [Video](https://iastate.box.com/s/4idjpf7k3ylyvmkxu08nnnqjyz08nnxj)                         | |
-| September 12 |            |                          | |
-| September 19 |            |                          | |
-| September 26 |            |                          | |
+| September 12 | Caleb Leedy | [Data Integration in Causal Inference](Presentations/dataint.pdf) | [Paper](https://wires.onlinelibrary.wiley.com/doi/pdfdirect/10.1002/wics.1581) / [Video](https://iastate.box.com/s/4idjpf7k3ylyvmkxu08nnnqjyz08nnxj)                         |
+| September 19 | Rohit Kanrar | Causal Discovery             | |
+| September 26 | Moushumi   |                          | |
 | October 3    |            |                          | |
-| October 10   |            |                          | |
+| October 10   | Hao Wang   |                          | |
 | October 17   |            |                          | |
 | October 24   |            |                          | |
 | October 31   |            |                          | |
-| November 7   |            |                          | |
-| November 14  |            |                          | |
-| November 21  |            |                          | |
+| November 7   | Chunlin Li |                          | |
+| November 14  | Cindy Yu   |                          | |
+| November 21  | TBD        |                          | |
 | November 28  |            |                          | |
-| December 5   |            |                          | |
+| December 5   | Yunhui Qi  |                          | |
 | December 12  |            |                          | |
 
 Last semester's schedule is [here](/S2023_README.md).
