@@ -9,7 +9,7 @@ is:
 | Date | Presenter(s) | Topic | Links |
 | ----- | ----------  | ------| ----  |
 | September 5 | Caleb Leedy | [Welcome](Presentations/welcome_032223.pdf) and [Introduction](Presentations/intro_090523.pdf) | |
-| September 12 | Caleb Leedy | [Data Integration in Causal Inference](Presentations/dataint.pdf) | [Paper](https://wires.onlinelibrary.wiley.com/doi/pdfdirect/10.1002/wics.1581) [Video](https://iastate.box.com/s/4idjpf7k3ylyvmkxu08nnnqjyz08nnxj)                         | |
+| September 12 | Caleb Leedy | [Data Integration in Causal Inference](Presentations/dataint.pdf) | [Paper](https://wires.onlinelibrary.wiley.com/doi/pdfdirect/10.1002/wics.1581) / [Video](https://iastate.box.com/s/4idjpf7k3ylyvmkxu08nnnqjyz08nnxj)                         | |
 | September 12 |            |                          | |
 | September 19 |            |                          | |
 | September 26 |            |                          | |
