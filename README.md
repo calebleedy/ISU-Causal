@@ -12,7 +12,7 @@ is:
 | September 12 | Caleb Leedy | [Data Integration in Causal Inference](Presentations/dataint.pdf) | [Paper](https://wires.onlinelibrary.wiley.com/doi/pdfdirect/10.1002/wics.1581) / [Video](https://iastate.box.com/s/4idjpf7k3ylyvmkxu08nnnqjyz08nnxj)                         |
 | September 19 | Rohit Kanrar | Causal Discovery             | [Paper](https://projecteuclid.org/journals/annals-of-statistics/volume-42/issue-6/CAM--Causal-additive-models-high-dimensional-order-search-and/10.1214/14-AOS1260.full) |
 | September 26 | Moushumi   |                          | |
-| October 3    |            |                          | |
+| October 3    | Group Discussion | Review presentation of Eric Tchetgen Tchetgen | |
 | October 10   | Hao Wang   |                          | |
 | October 17   |            |                          | |
 | October 24   |            |                          | |
