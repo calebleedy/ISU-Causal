@@ -10,7 +10,7 @@ is:
 | ----- | ----------  | ------| ----  |
 | September 5 | Caleb Leedy | [Welcome](Presentations/welcome_032223.pdf) and [Introduction](Presentations/intro_090523.pdf) | |
 | September 12 | Caleb Leedy | [Data Integration in Causal Inference](Presentations/dataint.pdf) | [Paper](https://wires.onlinelibrary.wiley.com/doi/pdfdirect/10.1002/wics.1581) / [Video](https://iastate.box.com/s/4idjpf7k3ylyvmkxu08nnnqjyz08nnxj)                         |
-| September 19 | Rohit Kanrar | [Causal Discovery](Presentations/CWG_Pres_F23.pdf) | [Paper](https://projecteuclid.org/journals/annals-of-statistics/volume-42/issue-6/CAM--Causal-additive-models-high-dimensional-order-search-and/10.1214/14-AOS1260.full) |
+| September 19 | Rohit Kanrar | [Causal Discovery](Presentations/CWG_Pres_F23.pdf) | [Paper](https://projecteuclid.org/journals/annals-of-statistics/volume-42/issue-6/CAM--Causal-additive-models-high-dimensional-order-search-and/10.1214/14-AOS1260.full) / [Video](https://iastate.box.com/s/y26lj486fgab2vrh8pk3pzca0sknqb8l) |
 | September 26 | Moushumi   |                          | |
 | October 3    | Group Discussion | Review presentation of Eric Tchetgen Tchetgen | |
 | October 10   | Hao Wang   |                          | |
@@ -20,7 +20,7 @@ is:
 | November 7   | Chunlin Li |                          | |
 | November 14  | Cindy Yu   |                          | |
 | November 21  | TBD        |                          | |
-| November 28  |            |                          | |
+| November 28  | Zhiling Gu |                          | |
 | December 5   | Yunhui Qi  |                          | |
 | December 12  |            |                          | |
 
