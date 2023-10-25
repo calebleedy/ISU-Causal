@@ -1,0 +1,123 @@
+\documentclass[handout]{beamer} %
+\usetheme{CambridgeUS}
+\usepackage[latin1]{inputenc}
+\usefonttheme{professionalfonts}
+\usepackage{times}
+\usepackage{graphics}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{booktabs}
+
+\usepackage[style=authoryear]{biblatex}
+
+\addbibresource{references.bib}
+
+% theorem
+\BeforeBeginEnvironment{theorem}{
+  \setbeamercolor{block title}{fg=red!80!black,bg=gray!10!white}
+  \setbeamercolor{block body}{fg=black,bg=white}
+}
+\AfterEndEnvironment{theorem}{
+    \setbeamercolor{block title}{fg=blocktitlefgsave,bg=blocktitlebgsave}
+    \setbeamercolor{block body}{fg=blockbodyfgsave,bg=blockbodybgsave}
+}
+
+
+% definition
+\BeforeBeginEnvironment{definition}{
+  \setbeamercolor{block title}{fg=red!80!black,bg=gray!10!white}
+  \setbeamercolor{block body}{fg=black, bg=white}
+}
+\AfterEndEnvironment{definition}{
+    \setbeamercolor{block title}{fg=blocktitlefgsave,bg=blocktitlebgsave}
+    \setbeamercolor{block body}{fg=blockbodyfgsave,bg=blockbodybgsave}
+}
+
+\renewcommand{\arraystretch}{1.5}
+
+%\setbeamersize{text margin left=0.3mm,text margin right=0.1mm}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\expit}{expit}
+\DeclareMathOperator*{\Cov}{Cov}
+\DeclareMathOperator*{\Var}{Var}
+\newcommand{\R}{\mathbb{R}}
+
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, filecolor=magenta, urlcolor=blue}
+
+\author[CL]{Caleb Leedy}
+\title[Research]{New Research in Causal Inference}
+
+\begin{document}
+
+\everymath{\displaystyle}
+\setbeamertemplate{title page}[default][colsep=-4bp,rounded=true]
+\setbeamertemplate{itemize items}[circle]
+\setbeamercolor{block title}{bg=red!50,fg=black}
+\frame{\titlepage}
+
+\begin{frame}{Causal Inference Research Ideas}
+
+\begin{itemize}
+  \item<1-> Ideally, everyone is coming today with new ideas for research in causal
+    inference.
+  \item<2-> Even if you did not there is hope!
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Stages of Research Ideas}
+
+  \begin{itemize}
+    \item[1.] Topic of Interest (Ex. Causal inference with spatial data.)
+    \item[2.] Problem of Interest (Ex. Spatial treatment effects.)
+    \item[3.] Idea for a Solution (Ex. Use a spatial varying coefficient model.
+      Challenge is probably defining the missing mechanism.)
+    \item[4.] Initial Results
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Types of Ideas}
+
+  \begin{itemize}
+    \item<1-> Not every idea is good.
+    \item<2-> We love bad ideas.
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Group Step 1}
+
+  \begin{itemize}
+    \item As a group of 2-3, share your research ideas together.
+    \item Start with your bad ideas.
+    \item Give constructive feedback to group member.
+    \item Encourage them to be more detailed.
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}{Group Step 2}
+
+  \begin{itemize}
+    \item As a large group, we will share our research ideas together.
+    \item Give constructive feedback to group member.
+    \item Encourage them to be more detailed.
+  \end{itemize}
+
+\end{frame}
+
+%\begin{frame}{}
+%
+%  \begin{itemize}
+%    \item
+%  \end{itemize}
+%
+%\end{frame}
+
+\end{document}
