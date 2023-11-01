@@ -16,11 +16,11 @@ is:
 | October 10   | Hao Wang   | [Robust Causal Effects in High Dimensions](Presentations/slides_HaoW_20231010.pdf) | [Paper](https://academic.oup.com/biomet/article-abstract/107/3/533/5850656?redirectedFrom=fulltext&casa_token=v-2deo1Iz_kAAAAA:K-MhgZygAol9VmKTnQlP8zlAaJQ2oEdBRDo1xF86O1VZJVjN-3BwEyX41Eram3kNrT_OOxuej55zYw) / [Video](https://iastate.box.com/s/9wohn50ge05amzz6970gqtj5dfphxy0d) |
 | October 17   | Yuyang Li  | [Dynamic Causal Effects in A/B Testing](Presentations/Online_AB_Testing_with_RL_framework.pdf) | [Paper](https://www.tandfonline.com/doi/epdf/10.1080/01621459.2022.2027776?needAccess=true) / [Video](https://iastate.box.com/s/z3rs0edqdgjn5432xbctcilulhzbs9k2) |
 | October 24   | Debarshi Chakraborty | [Structural Estimation in DAGs](Presentations/CIWG_Talk_October_24__2023.pdf) | [Video](https://iastate.box.com/s/6bilaqg2xv8zl8e1kyjqv2uu6l30bz17) |
-| October 31   | Everyone | [New Research Ideas](Presentations/research_103123.pdf) | |
+| October 31   | Everyone | [New Research Ideas](Presentations/research_103123.pdf) | [Video](https://iastate.box.com/s/i9yhei0teow66lhje9lgp7v7hgqzpqak) |
 | November 7   | Chunlin Li |                          | |
 | November 14  | Cindy Yu   |                          | |
 | November 21  | None       | Thanksgiving Break       | |
-| November 28  | Zhiling Gu |                          | |
+| November 28  | Zhiling Gu (Remote) |                          | |
 | December 5   | Yunhui Qi  |                          | |
 | December 12  |            |                          | |
 
