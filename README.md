@@ -20,7 +20,7 @@ is:
 | November 7   | Cancelled |                          | |
 | November 14  | Cindy Yu   | Quantile Regression with ATEs | |
 | November 21  | None       | Thanksgiving Break       | |
-| November 28  | Zhiling Gu (Remote) |                          | |
+| November 28  | Zhiling Gu (Remote) |  [Mediation Analysis](Presentations/CIWG_20231128_MediationAnalysis_Zhiling.pdf)    | [Paper](https://arxiv.org/pdf/2310.11630.pdf)|
 | December 5   | Yunhui Qi  |                          | |
 | December 12  |            |                          | |
 
