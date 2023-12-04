@@ -22,7 +22,6 @@ is:
 | November 21  | None       | Thanksgiving Break       | |
 | November 28  | Zhiling Gu |  [Bootstrap Tests for Composite Hypotheses](Presentations/CIWG_20231128_MediationAnalysis_Zhiling.pdf)    | [Paper](https://arxiv.org/pdf/2310.11630.pdf) / [Video](https://iastate.box.com/s/2ky3a1jathsh6uirjgwojrnqw4vp90ni)|
 | December 5   | Yunhui Qi  | Estimating High-Dimensional DAGs | [Paper](https://jmlr.csail.mit.edu/papers/volume8/kalisch07a/kalisch07a.pdf) |
-| December 12  |            |                          | |
 
 Last semester's schedule is [here](/S2023_README.md).
 
