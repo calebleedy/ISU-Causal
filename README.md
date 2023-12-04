@@ -20,7 +20,7 @@ is:
 | November 7   | Cancelled |                          | |
 | November 14  | Cindy Yu   | Quantile Regression with ATEs | [Video](https://iastate.box.com/s/poae9muiqbjw5bch287alpr7eued52n4)|
 | November 21  | None       | Thanksgiving Break       | |
-| November 28  | Zhiling Gu |  [Adaptive Bootstrap Tests for Composite Hypotheses](Presentations/CIWG_20231128_MediationAnalysis_Zhiling.pdf)    | [Paper](https://arxiv.org/pdf/2310.11630.pdf) / [Video](https://iastate.box.com/s/2ky3a1jathsh6uirjgwojrnqw4vp90ni)|
+| November 28  | Zhiling Gu |  [Bootstrap Tests for Composite Hypotheses](Presentations/CIWG_20231128_MediationAnalysis_Zhiling.pdf)    | [Paper](https://arxiv.org/pdf/2310.11630.pdf) / [Video](https://iastate.box.com/s/2ky3a1jathsh6uirjgwojrnqw4vp90ni)|
 | December 5   | Yunhui Qi  | Estimating High-Dimensional DAGs | [Paper](https://jmlr.csail.mit.edu/papers/volume8/kalisch07a/kalisch07a.pdf) |
 | December 12  |            |                          | |
 
