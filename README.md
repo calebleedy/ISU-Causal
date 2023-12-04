@@ -18,10 +18,10 @@ is:
 | October 24   | Debarshi Chakraborty | [Structural Estimation in DAGs](Presentations/CIWG_Talk_October_24__2023.pdf) | [Video](https://iastate.box.com/s/6bilaqg2xv8zl8e1kyjqv2uu6l30bz17) |
 | October 31   | Everyone | [New Research Ideas](Presentations/research_103123.pdf) | [Video](https://iastate.box.com/s/i9yhei0teow66lhje9lgp7v7hgqzpqak) |
 | November 7   | Cancelled |                          | |
-| November 14  | Cindy Yu   | Quantile Regression with ATEs | |
+| November 14  | Cindy Yu   | Quantile Regression with ATEs | [Video](https://iastate.box.com/s/poae9muiqbjw5bch287alpr7eued52n4)|
 | November 21  | None       | Thanksgiving Break       | |
-| November 28  | Zhiling Gu (Remote) |  [Adaptive bootstrap tests for composite null hypotheses](Presentations/CIWG_20231128_MediationAnalysis_Zhiling.pdf)    | [Paper](https://arxiv.org/pdf/2310.11630.pdf)|
-| December 5   | Yunhui Qi  |                          | |
+| November 28  | Zhiling Gu (Remote) |  [Adaptive Bootstrap Tests for Composite Hypotheses](Presentations/CIWG_20231128_MediationAnalysis_Zhiling.pdf)    | [Paper](https://arxiv.org/pdf/2310.11630.pdf) / [Video](https://iastate.box.com/s/2ky3a1jathsh6uirjgwojrnqw4vp90ni)|
+| December 5   | Yunhui Qi  | Estimating High-Dimensional DAGs | [Paper](https://jmlr.csail.mit.edu/papers/volume8/kalisch07a/kalisch07a.pdf) |
 | December 12  |            |                          | |
 
 Last semester's schedule is [here](/S2023_README.md).
