@@ -8,10 +8,10 @@ is:
 | Date | Presenter(s) | Topic | Links |
 | ----- | ----------  | ------| ----  |
 | Febrary 1  | Chunlin Li | Quantifying High-Dimensional Omics Mediators: Unraveling the Link from Alcohol Intake to Coronary Heart Disease |     |
-| Febrary 8  |            |    |    |
-| Febrary 15 |            |    |    |
-| Febrary 22 |            |    |    |
-| Febrary 20 |            |    |    |
+| Febrary 8  | Yuyang Li  |    |    |
+| Febrary 15 | Caleb      |    |    |
+| Febrary 22 | Rohit      |    |    |
+| Febrary 29 |            |    |    |
 | March 7    |            |    |    |
 | March 14   | None       | Spring break |    |
 | March 21   |            |    |    |
