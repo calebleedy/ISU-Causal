@@ -7,7 +7,7 @@ is:
 
 | Date | Presenter(s) | Topic | Links |
 | ----- | ----------  | ------| ----  |
-| Febrary 1  | Chunlin Li |    |     |
+| Febrary 1  | Chunlin Li | Quantifying High-Dimensional Omics Mediators: Unraveling the Link from Alcohol Intake to Coronary Heart Disease |     |
 | Febrary 8  |            |    |    |
 | Febrary 15 |            |    |    |
 | Febrary 22 |            |    |    |
