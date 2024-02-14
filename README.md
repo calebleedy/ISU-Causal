@@ -8,13 +8,13 @@ is:
 | Date | Presenter(s) | Topic | Links |
 | ----- | ----------  | ------| ----  |
 | Febrary 1  | Chunlin Li | Quantifying High-Dimensional Omics Mediators: Unraveling the Link from Alcohol Intake to Coronary Heart Disease |     |
-| Febrary 8  | Yuyang Li  |    |    |
-| Febrary 15 | Caleb      |    |    |
+| Febrary 8  | Yuyang Li  | Optimal Treatment Allocation for Efficient Policy Evaluation in Sequential Decision Making                      |    |
+| Febrary 15 | Moushumi   | Targeted Optimal Treatment Regime Learning Using Summary Statistics                                             |    |
 | Febrary 22 | Rohit      |    |    |
 | Febrary 29 |            |    |    |
 | March 7    |            |    |    |
 | March 14   | None       | Spring break |    |
-| March 21   |            |    |    |
+| March 21   | Geping Chen|    |    |
 | March 28   |            |    |    |
 | April 4    |            |    |    |
 | April 11   |            |    |    |
