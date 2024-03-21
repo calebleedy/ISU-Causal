@@ -14,7 +14,7 @@ is:
 | Febrary 29 |            |    |    |
 | March 7    |            |    |    |
 | March 14   | None       | Spring break |    |
-| March 21   | Geping Chen|    |    |
+| March 21   | Jae-Kwang Kim | [Survey Data Integration](Presentations/Part1.pdf)   |    |
 | March 28   |            |    |    |
 | April 4    |            |    |    |
 | April 11   |            |    |    |
