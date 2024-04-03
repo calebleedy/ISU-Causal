@@ -12,7 +12,7 @@ is:
 | Febrary 15 | Moushumi   | Targeted Optimal Treatment Regime Learning Using Summary Statistics                                             |    |
 | March 21   | Jae-Kwang Kim | [Survey Data Integration](Presentations/Part1.pdf)   |    |
 | March 28   | Jae-Kwang Kim | [Survey Data Integration](Presentations/Part2.pdf)   |    |
-| April 4    |            |    |    |
+| April 4    | Jae-Kwang Kim | [Survey Data Integration](Presentations/Part3.pdf)   |    |
 | April 11   |            |    |    |
 | April 18   |            |    |    |
 | April 25   |            |    |    |
