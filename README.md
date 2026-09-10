@@ -13,9 +13,6 @@ is:
 | March 21   | Jae-Kwang Kim | [Survey Data Integration](Presentations/Part1.pdf)   |    |
 | March 28   | Jae-Kwang Kim | [Survey Data Integration](Presentations/Part2.pdf)   |    |
 | April 4    | Jae-Kwang Kim | [Survey Data Integration](Presentations/Part3.pdf)   |    |
-| April 11   |            |    |    |
-| April 18   |            |    |    |
-| April 25   |            |    |    |
 
 The previous schedules: [Spring 2023](/S2023_README.md), [Fall 2023](/F2023_README.md).
 
