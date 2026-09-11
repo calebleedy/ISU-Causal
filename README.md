@@ -7,9 +7,9 @@ is:
 
 | Date | Presenter(s) | Topic | Links |
 | ----- | ----------  | ------| ----  |
-| Febrary 1  | Chunlin Li | Quantifying High-Dimensional Omics Mediators: Unraveling the Link from Alcohol Intake to Coronary Heart Disease |     |
-| Febrary 8  | Yuyang Li  | Optimal Treatment Allocation for Efficient Policy Evaluation in Sequential Decision Making                      |    |
-| Febrary 15 | Moushumi   | Targeted Optimal Treatment Regime Learning Using Summary Statistics                                             |    |
+| February 1  | Chunlin Li | Quantifying High-Dimensional Omics Mediators: Unraveling the Link from Alcohol Intake to Coronary Heart Disease |     |
+| February 8  | Yuyang Li  | Optimal Treatment Allocation for Efficient Policy Evaluation in Sequential Decision Making                      |    |
+| February 15 | Moushumi   | Targeted Optimal Treatment Regime Learning Using Summary Statistics                                             |    |
 | March 21   | Jae-Kwang Kim | [Survey Data Integration](Presentations/Part1.pdf)   |    |
 | March 28   | Jae-Kwang Kim | [Survey Data Integration](Presentations/Part2.pdf)   |    |
 | April 4    | Jae-Kwang Kim | [Survey Data Integration](Presentations/Part3.pdf)   |    |
